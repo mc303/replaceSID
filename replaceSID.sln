@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "replaceSID", "replaceSID\replaceSID.vbproj", "{483FCCA3-094A-4306-94A2-6C922D02BE67}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{483FCCA3-094A-4306-94A2-6C922D02BE67}.Debug|x86.ActiveCfg = Debug|x86
+		{483FCCA3-094A-4306-94A2-6C922D02BE67}.Debug|x86.Build.0 = Debug|x86
+		{483FCCA3-094A-4306-94A2-6C922D02BE67}.Release|x86.ActiveCfg = Release|x86
+		{483FCCA3-094A-4306-94A2-6C922D02BE67}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		BuildVersion_UseGlobalSettings = True
+		BuildVersion_BuildVersioningStyle = None.None.Increment.DeltaBaseYearDayOfYear
+		BuildVersion_StartDate = 2012/11/16
+	EndGlobalSection
+EndGlobal
