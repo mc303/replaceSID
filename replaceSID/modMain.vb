@@ -3,9 +3,11 @@ Imports System.Collections.Generic
 Imports System.IO
 
 Module modMain
+    Public Delegate Sub _setState(ByVal b_state As Boolean)
     Public dic_sidmap As New Dictionary(Of String, String)
     Public _exportFile As StreamWriter
 
+    
     Function splitSDDL(s_ssdl As String) As String
         ' Call Regex.Matches method.
         Dim matches As MatchCollection = Regex.Matches(s_ssdl, "S-1-5-21-[0-9]{10}-[0-9]{10}-[0-9\-]{0,}")
@@ -136,21 +138,143 @@ Module modMain
         End If
     End Sub
 
+    Sub enableRunBackupSDDL()
+        Dim i_enableRun As Integer = 0
+        Dim b_isUri As Boolean
+
+        If Not frmMain.txtSaveSDDLBackup.Text = "" Then
+            b_isUri = New Uri(frmMain.txtSaveOutput.Text).IsFile
+            If Not b_isUri Then
+                b_isUri = New Uri(frmMain.txtSaveOutput.Text).IsUnc
+            End If
+        End If
+
+        If b_isUri Then
+            If Directory.Exists(Path.GetDirectoryName(frmMain.txtSaveSDDLBackup.Text)) Then
+                i_enableRun += 1
+            End If
+        End If
+
+        If Not frmMain.txtBackupSDDLon.Text = "" Then
+            b_isUri = New Uri(frmMain.txtSaveOutput.Text).IsFile
+        End If
+
+
+        If b_isUri Then
+            If Directory.Exists(Path.GetDirectoryName(frmMain.txtBackupSDDLon.Text)) Then
+                i_enableRun += 1
+            End If
+        End If
+
+        If i_enableRun = 2 Then
+            frmMain.cmdRunBackupSDDL.Enabled = True
+        End If
+    End Sub
+
     Function runSetACLBackupACL() As String
         'setacl -on d:\data -ot file -actn list -lst "f:sddl;w:d,s,o,g;i:y;oo:y" -rec cont -bckp d:\backup.txt -silent 
         Dim process As New Process()
-        Dim FileName As String = "netstat"
-        Dim Arguments As String = "-aon"
+        Dim s_command As String = "C:\_beheer\SetACL.exe"
+        Dim s_arguments As String = makeSetACLcommand()
         process.StartInfo.UseShellExecute = False
         process.StartInfo.RedirectStandardOutput = True
         process.StartInfo.RedirectStandardError = True
         process.StartInfo.CreateNoWindow = True
-        process.StartInfo.FileName = FileName
-        process.StartInfo.Arguments = Arguments
+        process.StartInfo.FileName = s_command
+        process.StartInfo.Arguments = s_arguments
+
+        ' Raise Event on Exit
+        process.EnableRaisingEvents = True
+
+        ' Add an event handler.
+        AddHandler process.Exited, AddressOf frmMain.ProcessExited
+
+        'b Call setStateCMDRunBackupSDDL(False)
+        ' start the Process
         process.Start()
+        'frmMain.cmdRunBackupSDDL.Enabled = False
+
         Dim output As String = process.StandardOutput.ReadToEnd()
 
         Return output
     End Function
 
+    Function makeSetACLcommand() As String
+        Dim s_arguments As String = "-on """ + frmMain.txtBackupSDDLon.Text + """ -ot file -actn list -lst ""f:sddl;"
+        Dim s_what As String = ""
+        Dim s_listInherited As String = ""
+        Dim s_orphanedOnly As String = ""
+        Dim s_recursion As String = ""
+
+        If frmMain.chkBackupSDDLdacl.Checked Then
+            s_what &= "d,"
+        End If
+        If frmMain.chkBackupSDDLsacl.Checked Then
+            s_what &= "s,"
+        End If
+        If frmMain.chkBackupSDDLOwner.Checked Then
+            s_what &= "o,"
+        End If
+        If frmMain.chkBackupSDDLPrimaryGroup.Checked Then
+            s_what &= "g"
+        End If
+
+        If s_what.Length >= 1 Then
+            s_what = "w:" + s_what + ";"
+        End If
+
+        If frmMain.chkBackupSDDLi.Checked Then
+            s_listInherited &= "i:y;"
+        End If
+
+        If frmMain.chkBackupSDDLoo.Checked Then
+            s_orphanedOnly &= "oo:y"
+        End If
+
+        If frmMain.chkBackupSDDLcont.Checked Then
+            s_recursion = " -rec cont"
+        End If
+
+        If frmMain.chkBackupSDDLobj.Checked Then
+            s_recursion = " -rec obj"
+        End If
+
+        If frmMain.chkBackupSDDLcont_obj.Checked Then
+            s_recursion = " -rec cont_obj"
+        End If
+
+        s_arguments = s_arguments + s_what + s_listInherited + s_orphanedOnly
+
+        If s_arguments.EndsWith(";") Then
+            s_arguments = s_arguments.Substring(0, (s_arguments.Length - 1))
+
+        End If
+
+        s_arguments = s_arguments + """" + s_recursion + " -bckp """ + frmMain.txtSaveSDDLBackup.Text + """ -silent"
+
+        Return s_arguments
+
+        s_arguments = Nothing
+    End Function
+
+    Public Sub setStateCMDRunBackupSDDL(ByVal b_state As Boolean)
+        ' InvokeRequired required compares the thread ID of the'
+        ' calling thread to the thread ID of the creating thread.'
+        ' If these threads are different, it returns true.'       
+        If frmMain.cmdRunBackupSDDL.InvokeRequired Then
+            frmMain.Invoke(New _setState(AddressOf setStateCMDRunBackupSDDL), b_state)
+        Else
+            frmMain.cmdRunBackupSDDL.Enabled = b_state
+        End If
+    End Sub
+
+
+    'Public Delegate Sub runToggleInvoker(ByVal value As Integer)
+    'Public Sub runToggle(ByVal value As Integer)
+    '    If Sandbox.Label1.InvokeRequired = True Then
+    '        Sandbox.Label1.Invoke(New runToggleInvoker(AddressOf runToggle), value)
+    '    Else
+    '        Sandbox.Label1.Text = value
+    '    End If
+    'End Sub
 End Module
