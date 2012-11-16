@@ -1,5 +1,5 @@
 ﻿Public Class frmMain
-    Dim debugOption As Boolean = True
+    Dim debugOption As Boolean = False
     Dim debugOutput As String
 
     Private Sub frmMain_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing

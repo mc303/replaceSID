@@ -10,7 +10,9 @@ Module modMain
     
     Function splitSDDL(s_ssdl As String) As String
         ' Call Regex.Matches method.
-        Dim matches As MatchCollection = Regex.Matches(s_ssdl, "S-1-5-21-[0-9]{10}-[0-9]{10}-[0-9\-]{0,}")
+        ' (S-1-5-21)(\-\d{8,10}){3}(\-\d{3,}){1}
+        ' S-1-5-21-[0-9]{10}-[0-9]{10}-[0-9\-]{0,}
+        Dim matches As MatchCollection = Regex.Matches(s_ssdl, "(S-1-5-21)(\-\d{8,10}){3}(\-\d{3,}){1}}")
 
         If matches.Count = 0 Then
             s_ssdl = s_ssdl
