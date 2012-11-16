@@ -39,17 +39,14 @@
         Me.tabReplaceSID.Text = "Replace SID"
         Me.tabRestoreSDDL.Text = "Restore ACL"
 
-        Me.cmdRunBackupSDDL.Enabled = False
-        Me.cmdRunBackupSDDL.Text = "Backup ACL..."
 
-        Me.cmdSaveSDDLBackup.Text = "Browse..."
 
         Me.lblBrowseSSDL.Text = "Open SSDL file to replace with SIDMap csv file"
         Me.lblBrowseSIDmap.Text = "Open SIDMap csv file"
         Me.lblSaveOutput.Text = "Save replaced SSDL file with SIDMap csv file"
 
-        Me.cmdRun.Text = "Run replace..."
-        Me.cmdRun.Enabled = False
+        Me.cmdReplaceSIDRun.Text = "Run replace..."
+        Me.cmdReplaceSIDRun.Enabled = False
 
         Me.chkBackupSDDLcont.Checked = My.Settings.cont
         Me.chkBackupSDDLobj.Checked = My.Settings.obj
@@ -67,17 +64,34 @@
 
         Me.lblBackupSDDLWhat.Text = "What:"
         Me.lblBackupSDDLon.Text = "SetACL -on [Folder] -ot file -actn list"
-        Me.lblSaveSDDLBackup.Text = "-bckp [Filename] -rec cont_obj -silent"
+        Me.lblSaveSDDLBackup.Text = "-bckp [Filename] -rec [Recursion] -silent"
         Me.lblBackupSDDLCL.Text = "-actn list [-lst ""f:Format;w:What;i:ListInherited;s:DisplaySID;oo:OrphanedOnly""]"
+        Me.cmdBackupSDDLbckp.Text = "Browse..."
+        Me.cmdBackupSDDLRun.Text = "Backup ACL..."
+        Me.cmdBackupSDDLRun.Enabled = False
+
+        Me.cmdRestoreSDDLRun.Text = "Restore ACL..."
+        Me.lblRestoreSDDLon.Text = "SetACL -on [Folder] -ot file -actn restore"
+        Me.lblRestoreSDDLbkcp.Text = "-bckp [Filename]"
+        Me.cmdRestoreSDDLRun.Enabled = False
+
+        Me.lblSettingsSetACLLocation.Text = "SetACL file locatoin"
+        Me.cmdSettingsSetACLLocation.Text = "Browse..."
+        Me.txtSettingsSetACLLocation.Text = My.Settings.SetACLLocation
 
         If debugOption Then
-            Me.txtSSDLFile.Text = "C:\Users\admin.itvalue\Documents\backup.1.txt"
-            Me.txtBrowseSIDmap.Text = "C:\Users\admin.itvalue\Documents\SIDMap.csv"
-            Me.txtSaveOutput.Text = "C:\Users\admin.itvalue\Documents\sddlExport.txt"
+            Me.txtBackupSDDLbckp.Text = "C:\Users\admin.itvalue\Documents\backup.sddl.txt"
+            Me.txtBackupSDDLon.Text = "C:\Python32"
+            Me.cmdBackupSDDLRun.Enabled = True
 
-            Me.txtSaveSDDLBackup.Text = "C:\Users\admin.itvalue\Documents\backup.sddl.txt"
-            Me.txtBackupSDDLon.Text = "C:\_beheer"
-            Me.cmdRunBackupSDDL.Enabled = True
+            Me.txtSSDLFile.Text = "C:\Users\admin.itvalue\Documents\backup.sddl.txt"
+            Me.txtBrowseSIDmap.Text = "C:\Users\admin.itvalue\Documents\SIDMap.csv"
+            Me.txtSaveOutput.Text = "C:\Users\admin.itvalue\Documents\restore.sddl.txt"
+            Me.cmdReplaceSIDRun.Enabled = True
+
+            Me.txtRestoreSDDLbkcp.Text = "C:\Users\admin.itvalue\Documents\restore.sddl.txt"
+            Me.txtRestoreSDDLon.Text = "C:\Python32"
+            Me.cmdRestoreSDDLRun.Enabled = True
         End If
 
     End Sub
@@ -86,7 +100,7 @@
     ' *****************************************************************************************************************************************
 
 #Region "Command Buttons"
-    Private Sub cmdRun_Click(sender As System.Object, e As System.EventArgs) Handles cmdRun.Click
+    Private Sub cmdRun_Click(sender As System.Object, e As System.EventArgs) Handles cmdReplaceSIDRun.Click
         bgwLoadSIDMap.RunWorkerAsync()
 
     End Sub
@@ -114,10 +128,10 @@
         End If
         Call enableRunreplace()
     End Sub
-  
+
     Private Sub cmdSaveOutput_Click(sender As System.Object, e As System.EventArgs) Handles cmdSaveOutput.Click
         sfdSSDLFile.Title = "Save replaced SSDL file with SIDMap csv file"
-        sfdSSDLFile.FileName = "sddlExport.txt"
+        sfdSSDLFile.FileName = "restore.sddl.txt"
         sfdSSDLFile.Filter = "Text (*.txt) |*.txt"
 
         If sfdSSDLFile.ShowDialog = System.Windows.Forms.DialogResult.OK Then
@@ -126,22 +140,62 @@
         Call enableRunreplace()
     End Sub
 
-    Private Sub cmdSaveSDDLBackup_Click(sender As System.Object, e As System.EventArgs) Handles cmdSaveSDDLBackup.Click
+    Private Sub cmdSaveSDDLBackup_Click(sender As System.Object, e As System.EventArgs) Handles cmdBackupSDDLbckp.Click
         sfdSSDLFile.Title = "Save SSDL backup file"
         sfdSSDLFile.FileName = "backup.sddl.txt"
         sfdSSDLFile.Filter = "Text (*.txt) |*.txt"
 
         If sfdSSDLFile.ShowDialog = System.Windows.Forms.DialogResult.OK Then
-            Me.txtSaveSDDLBackup.Text = sfdSSDLFile.FileName
+            Me.txtBackupSDDLbckp.Text = sfdSSDLFile.FileName
         End If
 
         Call enableRunBackupSDDL()
     End Sub
 
-    Private Sub cmdRunBackupSDDL_Click(sender As System.Object, e As System.EventArgs) Handles cmdRunBackupSDDL.Click
-
+    Private Sub cmdRunBackupSDDL_Click(sender As System.Object, e As System.EventArgs) Handles cmdBackupSDDLRun.Click
+        Call setACLLocationNotSet()
         debugOutput = runSetACLBackupACL()
+    End Sub
 
+    Private Sub cmdRestoreSDDLRun_Click(sender As System.Object, e As System.EventArgs) Handles cmdRestoreSDDLRun.Click
+        Call setACLLocationNotSet()
+        debugOutput = runSetACLRestoreACL()
+    End Sub
+
+
+    Private Sub cmdRestoreSDDLbkcp_Click(sender As System.Object, e As System.EventArgs) Handles cmdRestoreSDDLbkcp.Click
+        ofdSSDLFile.Title = "Open SSDL file to restore"
+        ofdSSDLFile.FileName = "restore.sddl.txt"
+        ofdSSDLFile.Filter = "Text (*.txt) |*.txt|All Files|*.*"
+
+        If ofdSSDLFile.ShowDialog = System.Windows.Forms.DialogResult.OK Then
+            Me.txtRestoreSDDLbkcp.Text = ofdSSDLFile.FileName
+        End If
+        Call enableRestoreSDDLRun()
+    End Sub
+
+    Private Sub cmdSettingsSetACLLocation_Click(sender As System.Object, e As System.EventArgs) Handles cmdSettingsSetACLLocation.Click
+        Me.ofdSSDLFile.Title = "Select SetACL"
+        Me.ofdSSDLFile.FileName = "SetACL.exe"
+        Me.ofdSSDLFile.Filter = "SetACL (*.exe) |*.exe"
+
+        If ofdSSDLFile.ShowDialog = System.Windows.Forms.DialogResult.OK Then
+            Me.txtSettingsSetACLLocation.Text = Me.ofdSSDLFile.FileName
+            My.Settings.SetACLLocation = Me.txtSettingsSetACLLocation.Text
+            My.Settings.Save()
+        End If
+    End Sub
+
+    Sub selectSetACL()
+        Me.ofdSSDLFile.Title = "Select SetACL"
+        Me.ofdSSDLFile.FileName = "SetACL.exe"
+        Me.ofdSSDLFile.Filter = "SetACL (*.exe) |*.exe"
+
+        If ofdSSDLFile.ShowDialog = System.Windows.Forms.DialogResult.OK Then
+            Me.txtSettingsSetACLLocation.Text = Me.ofdSSDLFile.FileName
+            My.Settings.SetACLLocation = Me.txtSettingsSetACLLocation.Text
+            My.Settings.Save()
+        End If
     End Sub
 
 #End Region
@@ -192,5 +246,6 @@
         MsgBox("Ready", MsgBoxStyle.Information, "Message")
     End Sub
 
-  
+
+
 End Class

@@ -44,15 +44,15 @@ Partial Class frmMain
         Me.chkBackupSDDLPrimaryGroup = New System.Windows.Forms.CheckBox()
         Me.chkBackupSDDLdacl = New System.Windows.Forms.CheckBox()
         Me.lblBackupSDDLWhat = New System.Windows.Forms.Label()
-        Me.cmdRunBackupSDDL = New System.Windows.Forms.Button()
-        Me.txtSaveSDDLBackup = New System.Windows.Forms.TextBox()
+        Me.cmdBackupSDDLRun = New System.Windows.Forms.Button()
+        Me.txtBackupSDDLbckp = New System.Windows.Forms.TextBox()
         Me.lblSaveSDDLBackup = New System.Windows.Forms.Label()
-        Me.cmdSaveSDDLBackup = New System.Windows.Forms.Button()
+        Me.cmdBackupSDDLbckp = New System.Windows.Forms.Button()
         Me.tabReplaceSID = New System.Windows.Forms.TabPage()
         Me.lblSaveOutput = New System.Windows.Forms.Label()
         Me.txtSSDLFile = New System.Windows.Forms.TextBox()
         Me.lblBrowseSIDmap = New System.Windows.Forms.Label()
-        Me.cmdRun = New System.Windows.Forms.Button()
+        Me.cmdReplaceSIDRun = New System.Windows.Forms.Button()
         Me.lblBrowseSSDL = New System.Windows.Forms.Label()
         Me.cmdBrowseSSDL = New System.Windows.Forms.Button()
         Me.cmdSaveOutput = New System.Windows.Forms.Button()
@@ -60,11 +60,22 @@ Partial Class frmMain
         Me.txtSaveOutput = New System.Windows.Forms.TextBox()
         Me.cmdBrowseSIDmap = New System.Windows.Forms.Button()
         Me.tabRestoreSDDL = New System.Windows.Forms.TabPage()
-        Me.bgwBackupSDDL = New System.ComponentModel.BackgroundWorker()
+        Me.lblRestoreSDDLon = New System.Windows.Forms.Label()
+        Me.txtRestoreSDDLon = New System.Windows.Forms.TextBox()
+        Me.cmdRestoreSDDLRun = New System.Windows.Forms.Button()
+        Me.txtRestoreSDDLbkcp = New System.Windows.Forms.TextBox()
+        Me.lblRestoreSDDLbkcp = New System.Windows.Forms.Label()
+        Me.cmdRestoreSDDLbkcp = New System.Windows.Forms.Button()
         Me.tabSettings = New System.Windows.Forms.TabPage()
+        Me.bgwBackupSDDL = New System.ComponentModel.BackgroundWorker()
+        Me.txtSettingsSetACLLocation = New System.Windows.Forms.TextBox()
+        Me.lblSettingsSetACLLocation = New System.Windows.Forms.Label()
+        Me.cmdSettingsSetACLLocation = New System.Windows.Forms.Button()
         Me.TabControl1.SuspendLayout()
         Me.tabBackupSDDL.SuspendLayout()
         Me.tabReplaceSID.SuspendLayout()
+        Me.tabRestoreSDDL.SuspendLayout()
+        Me.tabSettings.SuspendLayout()
         Me.SuspendLayout()
         '
         'ofdSSDLFile
@@ -109,10 +120,10 @@ Partial Class frmMain
         Me.tabBackupSDDL.Controls.Add(Me.chkBackupSDDLPrimaryGroup)
         Me.tabBackupSDDL.Controls.Add(Me.chkBackupSDDLdacl)
         Me.tabBackupSDDL.Controls.Add(Me.lblBackupSDDLWhat)
-        Me.tabBackupSDDL.Controls.Add(Me.cmdRunBackupSDDL)
-        Me.tabBackupSDDL.Controls.Add(Me.txtSaveSDDLBackup)
+        Me.tabBackupSDDL.Controls.Add(Me.cmdBackupSDDLRun)
+        Me.tabBackupSDDL.Controls.Add(Me.txtBackupSDDLbckp)
         Me.tabBackupSDDL.Controls.Add(Me.lblSaveSDDLBackup)
-        Me.tabBackupSDDL.Controls.Add(Me.cmdSaveSDDLBackup)
+        Me.tabBackupSDDL.Controls.Add(Me.cmdBackupSDDLbckp)
         Me.tabBackupSDDL.Location = New System.Drawing.Point(4, 25)
         Me.tabBackupSDDL.Name = "tabBackupSDDL"
         Me.tabBackupSDDL.Padding = New System.Windows.Forms.Padding(3)
@@ -274,25 +285,25 @@ Partial Class frmMain
         Me.lblBackupSDDLWhat.TabIndex = 34
         Me.lblBackupSDDLWhat.Text = "What:"
         '
-        'cmdRunBackupSDDL
+        'cmdBackupSDDLRun
         '
-        Me.cmdRunBackupSDDL.FlatAppearance.BorderSize = 0
-        Me.cmdRunBackupSDDL.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.cmdRunBackupSDDL.Location = New System.Drawing.Point(384, 194)
-        Me.cmdRunBackupSDDL.Name = "cmdRunBackupSDDL"
-        Me.cmdRunBackupSDDL.Size = New System.Drawing.Size(127, 30)
-        Me.cmdRunBackupSDDL.TabIndex = 33
-        Me.cmdRunBackupSDDL.Text = "Run merge..."
-        Me.cmdRunBackupSDDL.UseVisualStyleBackColor = True
+        Me.cmdBackupSDDLRun.FlatAppearance.BorderSize = 0
+        Me.cmdBackupSDDLRun.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.cmdBackupSDDLRun.Location = New System.Drawing.Point(384, 194)
+        Me.cmdBackupSDDLRun.Name = "cmdBackupSDDLRun"
+        Me.cmdBackupSDDLRun.Size = New System.Drawing.Size(127, 30)
+        Me.cmdBackupSDDLRun.TabIndex = 33
+        Me.cmdBackupSDDLRun.Text = "Run merge..."
+        Me.cmdBackupSDDLRun.UseVisualStyleBackColor = True
         '
-        'txtSaveSDDLBackup
+        'txtBackupSDDLbckp
         '
-        Me.txtSaveSDDLBackup.BackColor = System.Drawing.SystemColors.HighlightText
-        Me.txtSaveSDDLBackup.Location = New System.Drawing.Point(8, 68)
-        Me.txtSaveSDDLBackup.Name = "txtSaveSDDLBackup"
-        Me.txtSaveSDDLBackup.ReadOnly = True
-        Me.txtSaveSDDLBackup.Size = New System.Drawing.Size(398, 21)
-        Me.txtSaveSDDLBackup.TabIndex = 30
+        Me.txtBackupSDDLbckp.BackColor = System.Drawing.SystemColors.HighlightText
+        Me.txtBackupSDDLbckp.Location = New System.Drawing.Point(8, 68)
+        Me.txtBackupSDDLbckp.Name = "txtBackupSDDLbckp"
+        Me.txtBackupSDDLbckp.ReadOnly = True
+        Me.txtBackupSDDLbckp.Size = New System.Drawing.Size(398, 21)
+        Me.txtBackupSDDLbckp.TabIndex = 30
         '
         'lblSaveSDDLBackup
         '
@@ -303,24 +314,24 @@ Partial Class frmMain
         Me.lblSaveSDDLBackup.TabIndex = 32
         Me.lblSaveSDDLBackup.Text = "-bckp Filename -rec cont -silent"
         '
-        'cmdSaveSDDLBackup
+        'cmdBackupSDDLbckp
         '
-        Me.cmdSaveSDDLBackup.FlatAppearance.BorderSize = 0
-        Me.cmdSaveSDDLBackup.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.cmdSaveSDDLBackup.Location = New System.Drawing.Point(410, 68)
-        Me.cmdSaveSDDLBackup.Name = "cmdSaveSDDLBackup"
-        Me.cmdSaveSDDLBackup.Size = New System.Drawing.Size(101, 21)
-        Me.cmdSaveSDDLBackup.TabIndex = 31
-        Me.cmdSaveSDDLBackup.Text = "Browse"
-        Me.cmdSaveSDDLBackup.TextAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.cmdSaveSDDLBackup.UseVisualStyleBackColor = True
+        Me.cmdBackupSDDLbckp.FlatAppearance.BorderSize = 0
+        Me.cmdBackupSDDLbckp.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.cmdBackupSDDLbckp.Location = New System.Drawing.Point(410, 68)
+        Me.cmdBackupSDDLbckp.Name = "cmdBackupSDDLbckp"
+        Me.cmdBackupSDDLbckp.Size = New System.Drawing.Size(101, 21)
+        Me.cmdBackupSDDLbckp.TabIndex = 31
+        Me.cmdBackupSDDLbckp.Text = "Browse"
+        Me.cmdBackupSDDLbckp.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.cmdBackupSDDLbckp.UseVisualStyleBackColor = True
         '
         'tabReplaceSID
         '
         Me.tabReplaceSID.Controls.Add(Me.lblSaveOutput)
         Me.tabReplaceSID.Controls.Add(Me.txtSSDLFile)
         Me.tabReplaceSID.Controls.Add(Me.lblBrowseSIDmap)
-        Me.tabReplaceSID.Controls.Add(Me.cmdRun)
+        Me.tabReplaceSID.Controls.Add(Me.cmdReplaceSIDRun)
         Me.tabReplaceSID.Controls.Add(Me.lblBrowseSSDL)
         Me.tabReplaceSID.Controls.Add(Me.cmdBrowseSSDL)
         Me.tabReplaceSID.Controls.Add(Me.cmdSaveOutput)
@@ -362,16 +373,16 @@ Partial Class frmMain
         Me.lblBrowseSIDmap.TabIndex = 30
         Me.lblBrowseSIDmap.Text = "Open SIDMap csv file"
         '
-        'cmdRun
+        'cmdReplaceSIDRun
         '
-        Me.cmdRun.FlatAppearance.BorderSize = 0
-        Me.cmdRun.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.cmdRun.Location = New System.Drawing.Point(384, 194)
-        Me.cmdRun.Name = "cmdRun"
-        Me.cmdRun.Size = New System.Drawing.Size(127, 30)
-        Me.cmdRun.TabIndex = 22
-        Me.cmdRun.Text = "Run merge..."
-        Me.cmdRun.UseVisualStyleBackColor = True
+        Me.cmdReplaceSIDRun.FlatAppearance.BorderSize = 0
+        Me.cmdReplaceSIDRun.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.cmdReplaceSIDRun.Location = New System.Drawing.Point(384, 194)
+        Me.cmdReplaceSIDRun.Name = "cmdReplaceSIDRun"
+        Me.cmdReplaceSIDRun.Size = New System.Drawing.Size(127, 30)
+        Me.cmdReplaceSIDRun.TabIndex = 22
+        Me.cmdReplaceSIDRun.Text = "Run merge..."
+        Me.cmdReplaceSIDRun.UseVisualStyleBackColor = True
         '
         'lblBrowseSSDL
         '
@@ -438,6 +449,12 @@ Partial Class frmMain
         '
         'tabRestoreSDDL
         '
+        Me.tabRestoreSDDL.Controls.Add(Me.lblRestoreSDDLon)
+        Me.tabRestoreSDDL.Controls.Add(Me.txtRestoreSDDLon)
+        Me.tabRestoreSDDL.Controls.Add(Me.cmdRestoreSDDLRun)
+        Me.tabRestoreSDDL.Controls.Add(Me.txtRestoreSDDLbkcp)
+        Me.tabRestoreSDDL.Controls.Add(Me.lblRestoreSDDLbkcp)
+        Me.tabRestoreSDDL.Controls.Add(Me.cmdRestoreSDDLbkcp)
         Me.tabRestoreSDDL.Location = New System.Drawing.Point(4, 25)
         Me.tabRestoreSDDL.Name = "tabRestoreSDDL"
         Me.tabRestoreSDDL.Padding = New System.Windows.Forms.Padding(3)
@@ -446,8 +463,69 @@ Partial Class frmMain
         Me.tabRestoreSDDL.Text = "Restore SDDL"
         Me.tabRestoreSDDL.UseVisualStyleBackColor = True
         '
+        'lblRestoreSDDLon
+        '
+        Me.lblRestoreSDDLon.AutoSize = True
+        Me.lblRestoreSDDLon.Location = New System.Drawing.Point(5, 7)
+        Me.lblRestoreSDDLon.Name = "lblRestoreSDDLon"
+        Me.lblRestoreSDDLon.Size = New System.Drawing.Size(237, 13)
+        Me.lblRestoreSDDLon.TabIndex = 51
+        Me.lblRestoreSDDLon.Text = "SetACL -on Foldername -ot file -actn list"
+        '
+        'txtRestoreSDDLon
+        '
+        Me.txtRestoreSDDLon.BackColor = System.Drawing.SystemColors.HighlightText
+        Me.txtRestoreSDDLon.Location = New System.Drawing.Point(8, 23)
+        Me.txtRestoreSDDLon.Name = "txtRestoreSDDLon"
+        Me.txtRestoreSDDLon.Size = New System.Drawing.Size(503, 21)
+        Me.txtRestoreSDDLon.TabIndex = 50
+        '
+        'cmdRestoreSDDLRun
+        '
+        Me.cmdRestoreSDDLRun.FlatAppearance.BorderSize = 0
+        Me.cmdRestoreSDDLRun.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.cmdRestoreSDDLRun.Location = New System.Drawing.Point(384, 194)
+        Me.cmdRestoreSDDLRun.Name = "cmdRestoreSDDLRun"
+        Me.cmdRestoreSDDLRun.Size = New System.Drawing.Size(127, 30)
+        Me.cmdRestoreSDDLRun.TabIndex = 49
+        Me.cmdRestoreSDDLRun.Text = "Run merge..."
+        Me.cmdRestoreSDDLRun.UseVisualStyleBackColor = True
+        '
+        'txtRestoreSDDLbkcp
+        '
+        Me.txtRestoreSDDLbkcp.BackColor = System.Drawing.SystemColors.HighlightText
+        Me.txtRestoreSDDLbkcp.Location = New System.Drawing.Point(8, 68)
+        Me.txtRestoreSDDLbkcp.Name = "txtRestoreSDDLbkcp"
+        Me.txtRestoreSDDLbkcp.ReadOnly = True
+        Me.txtRestoreSDDLbkcp.Size = New System.Drawing.Size(398, 21)
+        Me.txtRestoreSDDLbkcp.TabIndex = 46
+        '
+        'lblRestoreSDDLbkcp
+        '
+        Me.lblRestoreSDDLbkcp.AutoSize = True
+        Me.lblRestoreSDDLbkcp.Location = New System.Drawing.Point(5, 52)
+        Me.lblRestoreSDDLbkcp.Name = "lblRestoreSDDLbkcp"
+        Me.lblRestoreSDDLbkcp.Size = New System.Drawing.Size(188, 13)
+        Me.lblRestoreSDDLbkcp.TabIndex = 48
+        Me.lblRestoreSDDLbkcp.Text = "-bckp Filename -rec cont -silent"
+        '
+        'cmdRestoreSDDLbkcp
+        '
+        Me.cmdRestoreSDDLbkcp.FlatAppearance.BorderSize = 0
+        Me.cmdRestoreSDDLbkcp.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.cmdRestoreSDDLbkcp.Location = New System.Drawing.Point(410, 68)
+        Me.cmdRestoreSDDLbkcp.Name = "cmdRestoreSDDLbkcp"
+        Me.cmdRestoreSDDLbkcp.Size = New System.Drawing.Size(101, 21)
+        Me.cmdRestoreSDDLbkcp.TabIndex = 47
+        Me.cmdRestoreSDDLbkcp.Text = "Browse"
+        Me.cmdRestoreSDDLbkcp.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.cmdRestoreSDDLbkcp.UseVisualStyleBackColor = True
+        '
         'tabSettings
         '
+        Me.tabSettings.Controls.Add(Me.txtSettingsSetACLLocation)
+        Me.tabSettings.Controls.Add(Me.lblSettingsSetACLLocation)
+        Me.tabSettings.Controls.Add(Me.cmdSettingsSetACLLocation)
         Me.tabSettings.Location = New System.Drawing.Point(4, 25)
         Me.tabSettings.Name = "tabSettings"
         Me.tabSettings.Padding = New System.Windows.Forms.Padding(3)
@@ -455,6 +533,36 @@ Partial Class frmMain
         Me.tabSettings.TabIndex = 3
         Me.tabSettings.Text = "Settings"
         Me.tabSettings.UseVisualStyleBackColor = True
+        '
+        'txtSettingsSetACLLocation
+        '
+        Me.txtSettingsSetACLLocation.BackColor = System.Drawing.SystemColors.HighlightText
+        Me.txtSettingsSetACLLocation.Location = New System.Drawing.Point(8, 23)
+        Me.txtSettingsSetACLLocation.Name = "txtSettingsSetACLLocation"
+        Me.txtSettingsSetACLLocation.ReadOnly = True
+        Me.txtSettingsSetACLLocation.Size = New System.Drawing.Size(398, 21)
+        Me.txtSettingsSetACLLocation.TabIndex = 30
+        '
+        'lblSettingsSetACLLocation
+        '
+        Me.lblSettingsSetACLLocation.AutoSize = True
+        Me.lblSettingsSetACLLocation.Location = New System.Drawing.Point(5, 7)
+        Me.lblSettingsSetACLLocation.Name = "lblSettingsSetACLLocation"
+        Me.lblSettingsSetACLLocation.Size = New System.Drawing.Size(269, 13)
+        Me.lblSettingsSetACLLocation.TabIndex = 32
+        Me.lblSettingsSetACLLocation.Text = "Open SSDL file to merge with SIDMap csv file"
+        '
+        'cmdSettingsSetACLLocation
+        '
+        Me.cmdSettingsSetACLLocation.FlatAppearance.BorderSize = 0
+        Me.cmdSettingsSetACLLocation.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.cmdSettingsSetACLLocation.Location = New System.Drawing.Point(410, 23)
+        Me.cmdSettingsSetACLLocation.Name = "cmdSettingsSetACLLocation"
+        Me.cmdSettingsSetACLLocation.Size = New System.Drawing.Size(101, 21)
+        Me.cmdSettingsSetACLLocation.TabIndex = 31
+        Me.cmdSettingsSetACLLocation.Text = "Browse"
+        Me.cmdSettingsSetACLLocation.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.cmdSettingsSetACLLocation.UseVisualStyleBackColor = True
         '
         'frmMain
         '
@@ -472,6 +580,10 @@ Partial Class frmMain
         Me.tabBackupSDDL.PerformLayout()
         Me.tabReplaceSID.ResumeLayout(False)
         Me.tabReplaceSID.PerformLayout()
+        Me.tabRestoreSDDL.ResumeLayout(False)
+        Me.tabRestoreSDDL.PerformLayout()
+        Me.tabSettings.ResumeLayout(False)
+        Me.tabSettings.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -492,11 +604,11 @@ Partial Class frmMain
     Friend WithEvents txtBrowseSIDmap As System.Windows.Forms.TextBox
     Friend WithEvents cmdBrowseSSDL As System.Windows.Forms.Button
     Friend WithEvents txtSSDLFile As System.Windows.Forms.TextBox
-    Friend WithEvents cmdRun As System.Windows.Forms.Button
-    Friend WithEvents txtSaveSDDLBackup As System.Windows.Forms.TextBox
+    Friend WithEvents cmdReplaceSIDRun As System.Windows.Forms.Button
+    Friend WithEvents txtBackupSDDLbckp As System.Windows.Forms.TextBox
     Friend WithEvents lblSaveSDDLBackup As System.Windows.Forms.Label
-    Friend WithEvents cmdSaveSDDLBackup As System.Windows.Forms.Button
-    Friend WithEvents cmdRunBackupSDDL As System.Windows.Forms.Button
+    Friend WithEvents cmdBackupSDDLbckp As System.Windows.Forms.Button
+    Friend WithEvents cmdBackupSDDLRun As System.Windows.Forms.Button
     Friend WithEvents bgwBackupSDDL As System.ComponentModel.BackgroundWorker
     Friend WithEvents lblBackupSDDLWhat As System.Windows.Forms.Label
     Friend WithEvents lblBackupSDDLCL As System.Windows.Forms.Label
@@ -515,5 +627,14 @@ Partial Class frmMain
     Friend WithEvents chkBackupSDDLcont As System.Windows.Forms.CheckBox
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents tabSettings As System.Windows.Forms.TabPage
+    Friend WithEvents lblRestoreSDDLon As System.Windows.Forms.Label
+    Friend WithEvents txtRestoreSDDLon As System.Windows.Forms.TextBox
+    Friend WithEvents cmdRestoreSDDLRun As System.Windows.Forms.Button
+    Friend WithEvents txtRestoreSDDLbkcp As System.Windows.Forms.TextBox
+    Friend WithEvents lblRestoreSDDLbkcp As System.Windows.Forms.Label
+    Friend WithEvents cmdRestoreSDDLbkcp As System.Windows.Forms.Button
+    Friend WithEvents txtSettingsSetACLLocation As System.Windows.Forms.TextBox
+    Friend WithEvents lblSettingsSetACLLocation As System.Windows.Forms.Label
+    Friend WithEvents cmdSettingsSetACLLocation As System.Windows.Forms.Button
 
 End Class

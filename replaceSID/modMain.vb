@@ -119,6 +119,7 @@ Module modMain
         If File.Exists(frmMain.txtSSDLFile.Text) Then
             i_enableRun += 1
         End If
+
         If File.Exists(frmMain.txtBrowseSIDmap.Text) Then
             i_enableRun += 1
         End If
@@ -134,7 +135,7 @@ Module modMain
         End If
 
         If i_enableRun = 3 Then
-            frmMain.cmdRun.Enabled = True
+            frmMain.cmdReplaceSIDRun.Enabled = True
         End If
     End Sub
 
@@ -142,23 +143,25 @@ Module modMain
         Dim i_enableRun As Integer = 0
         Dim b_isUri As Boolean
 
-        If Not frmMain.txtSaveSDDLBackup.Text = "" Then
+        If Not frmMain.txtBackupSDDLbckp.Text = "" Then
             b_isUri = New Uri(frmMain.txtSaveOutput.Text).IsFile
             If Not b_isUri Then
                 b_isUri = New Uri(frmMain.txtSaveOutput.Text).IsUnc
             End If
+        Else
+            b_isUri = False
         End If
 
         If b_isUri Then
-            If Directory.Exists(Path.GetDirectoryName(frmMain.txtSaveSDDLBackup.Text)) Then
+            If Directory.Exists(Path.GetDirectoryName(frmMain.txtBackupSDDLbckp.Text)) Then
                 i_enableRun += 1
             End If
         End If
 
+        b_isUri = False
         If Not frmMain.txtBackupSDDLon.Text = "" Then
             b_isUri = New Uri(frmMain.txtSaveOutput.Text).IsFile
         End If
-
 
         If b_isUri Then
             If Directory.Exists(Path.GetDirectoryName(frmMain.txtBackupSDDLon.Text)) Then
@@ -167,15 +170,57 @@ Module modMain
         End If
 
         If i_enableRun = 2 Then
-            frmMain.cmdRunBackupSDDL.Enabled = True
+            frmMain.cmdBackupSDDLRun.Enabled = True
         End If
     End Sub
+
+    Sub enableRestoreSDDLRun()
+        Dim i_enableRun As Integer = 0
+        Dim b_isUri As Boolean
+
+        If Not frmMain.txtRestoreSDDLon.Text = "" Then
+            b_isUri = New Uri(frmMain.txtRestoreSDDLon.Text).IsFile
+            If Not b_isUri Then
+                b_isUri = New Uri(frmMain.txtRestoreSDDLon.Text).IsUnc
+            End If
+        Else
+            b_isUri = False
+        End If
+
+        If b_isUri Then
+            If Directory.Exists(Path.GetDirectoryName(frmMain.txtRestoreSDDLon.Text)) Then
+                i_enableRun += 1
+            End If
+        End If
+        b_isUri = False
+
+        If Not frmMain.txtRestoreSDDLbkcp.Text = "" Then
+            b_isUri = New Uri(frmMain.txtRestoreSDDLbkcp.Text).IsFile
+            If Not b_isUri Then
+                b_isUri = New Uri(frmMain.txtRestoreSDDLbkcp.Text).IsUnc
+            End If
+        Else
+            b_isUri = False
+
+        End If
+
+        If b_isUri Then
+            If Directory.Exists(Path.GetDirectoryName(frmMain.txtRestoreSDDLbkcp.Text)) Then
+                i_enableRun += 1
+            End If
+        End If
+
+        If i_enableRun = 2 Then
+            frmMain.cmdRestoreSDDLRun.Enabled = True
+        End If
+    End Sub
+
 
     Function runSetACLBackupACL() As String
         'setacl -on d:\data -ot file -actn list -lst "f:sddl;w:d,s,o,g;i:y;oo:y" -rec cont -bckp d:\backup.txt -silent 
         Dim process As New Process()
-        Dim s_command As String = "C:\_beheer\SetACL.exe"
-        Dim s_arguments As String = makeSetACLcommand()
+        Dim s_command As String = frmMain.txtSettingsSetACLLocation.Text
+        Dim s_arguments As String = makeSetACLBackupCommand()
         process.StartInfo.UseShellExecute = False
         process.StartInfo.RedirectStandardOutput = True
         process.StartInfo.RedirectStandardError = True
@@ -199,7 +244,41 @@ Module modMain
         Return output
     End Function
 
-    Function makeSetACLcommand() As String
+    Function runSetACLRestoreACL() As String
+        'setacl -on d:\data -ot file -actn list -lst "f:sddl;w:d,s,o,g;i:y;oo:y" -rec cont -bckp d:\backup.txt -silent 
+        Dim process As New Process()
+        Dim s_command As String = frmMain.txtSettingsSetACLLocation.Text
+        Dim s_arguments As String = "-on """ + frmMain.txtRestoreSDDLon.Text + """ -ot file -actn restore -bckp """ + frmMain.txtRestoreSDDLbkcp.Text + """ -silent"
+        process.StartInfo.UseShellExecute = False
+        process.StartInfo.RedirectStandardOutput = True
+        process.StartInfo.RedirectStandardError = True
+        process.StartInfo.CreateNoWindow = True
+        process.StartInfo.FileName = s_command
+        process.StartInfo.Arguments = s_arguments
+
+        ' Raise Event on Exit
+        process.EnableRaisingEvents = True
+
+        ' Add an event handler.
+        AddHandler process.Exited, AddressOf frmMain.ProcessExited
+
+        'b Call setStateCMDRunBackupSDDL(False)
+        ' start the Process
+        process.Start()
+        'frmMain.cmdRunBackupSDDL.Enabled = False
+
+        Dim output As String = process.StandardOutput.ReadToEnd()
+
+        Return output
+    End Function
+
+    Sub setACLLocationNotSet()
+        If frmMain.txtSettingsSetACLLocation.Text Is "" Then
+            Call frmMain.selectSetACL()
+        End If
+    End Sub
+
+    Function makeSetACLBackupCommand() As String
         Dim s_arguments As String = "-on """ + frmMain.txtBackupSDDLon.Text + """ -ot file -actn list -lst ""f:sddl;"
         Dim s_what As String = ""
         Dim s_listInherited As String = ""
@@ -250,7 +329,7 @@ Module modMain
 
         End If
 
-        s_arguments = s_arguments + """" + s_recursion + " -bckp """ + frmMain.txtSaveSDDLBackup.Text + """ -silent"
+        s_arguments = s_arguments + """" + s_recursion + " -bckp """ + frmMain.txtBackupSDDLbckp.Text + """ -silent"
 
         Return s_arguments
 
@@ -261,10 +340,10 @@ Module modMain
         ' InvokeRequired required compares the thread ID of the'
         ' calling thread to the thread ID of the creating thread.'
         ' If these threads are different, it returns true.'       
-        If frmMain.cmdRunBackupSDDL.InvokeRequired Then
+        If frmMain.cmdBackupSDDLRun.InvokeRequired Then
             frmMain.Invoke(New _setState(AddressOf setStateCMDRunBackupSDDL), b_state)
         Else
-            frmMain.cmdRunBackupSDDL.Enabled = b_state
+            frmMain.cmdBackupSDDLRun.Enabled = b_state
         End If
     End Sub
 
