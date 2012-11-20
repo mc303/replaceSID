@@ -1,7 +1,20 @@
-﻿Public Class frmMain
+﻿Imports System.Threading
+Imports System.ComponentModel
+
+Public Class frmMain
     Dim debugOption As Boolean = False
     Dim debugOutput As String
 
+    Private Delegate Sub DoStuffDelegate(ByVal MsgString As String)
+
+    Private Sub CompleteEventHandler(ByVal sender As Object, ByVal e As EventArgs)
+        Me.BeginInvoke(New DoStuffDelegate(AddressOf DoStuff), "meh")
+    End Sub
+
+    Private Sub DoStuff(ByVal MsgString As String)
+        frmSplash.ShowDialog()
+    End Sub
+    
     Private Sub frmMain_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
         My.Settings.cont = Me.chkBackupSDDLcont.Checked
 
@@ -16,21 +29,17 @@
         Dim myProcess As Process = DirectCast(sender, Process)
 
         If Not debugOutput = "" Then
-            MsgBox(debugOutput)
-        Else
-            MessageBox.Show("Ready", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            MsgBox(debugOutput)      
         End If
-        ' Call setStateCMDRunBackupSDDL(True)
 
-        'Me.cmdRunBackupSDDL.Enabled = True
-        '' MessageBox.Show("The process exited, raising " & _
-        '    "the Exited event at: " & myProcess.ExitTime & _
-        '    "." & System.Environment.NewLine & "Exit Code: " & myProcess.ExitCode)    
+        processThread.Close()
+        
         myProcess.Close()
     End Sub
+
     Private Sub Form1_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         'Set properties and stuff
-        
+
         My.Settings.Reload()
 
         Me.Text = "replaceSID Beta v" & My.Application.Info.Version.ToString
@@ -101,6 +110,7 @@
 
 #Region "Command Buttons"
     Private Sub cmdRun_Click(sender As System.Object, e As System.EventArgs) Handles cmdReplaceSIDRun.Click
+
         bgwLoadSIDMap.RunWorkerAsync()
 
     End Sub
@@ -153,13 +163,19 @@
     End Sub
 
     Private Sub cmdRunBackupSDDL_Click(sender As System.Object, e As System.EventArgs) Handles cmdBackupSDDLRun.Click
+
         Call setACLLocationNotSet()
+        processThread.Show("")
         debugOutput = runSetACLBackupACL()
+
     End Sub
 
     Private Sub cmdRestoreSDDLRun_Click(sender As System.Object, e As System.EventArgs) Handles cmdRestoreSDDLRun.Click
+
         Call setACLLocationNotSet()
+        processThread.Show("")
         debugOutput = runSetACLRestoreACL()
+
     End Sub
 
 
@@ -235,6 +251,7 @@
     End Sub
 
     Private Sub bgwReplaceSID_DoWork(sender As System.Object, e As System.ComponentModel.DoWorkEventArgs) Handles bgwReplaceSID.DoWork
+        Call processThread.Show("")
         Call importSDDLfile(Me.txtSSDLFile.Text, Me.txtSaveOutput.Text)
     End Sub
 
@@ -243,9 +260,7 @@
     End Sub
 
     Private Sub bgwReplaceSID_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgwReplaceSID.RunWorkerCompleted
-        MsgBox("Ready", MsgBoxStyle.Information, "Message")
+        'MsgBox("Ready", MsgBoxStyle.Information, "Message")
+        Call processThread.Close()
     End Sub
-
-
-
 End Class

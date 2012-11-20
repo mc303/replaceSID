@@ -67,10 +67,10 @@ Partial Class frmMain
         Me.lblRestoreSDDLbkcp = New System.Windows.Forms.Label()
         Me.cmdRestoreSDDLbkcp = New System.Windows.Forms.Button()
         Me.tabSettings = New System.Windows.Forms.TabPage()
-        Me.bgwBackupSDDL = New System.ComponentModel.BackgroundWorker()
         Me.txtSettingsSetACLLocation = New System.Windows.Forms.TextBox()
         Me.lblSettingsSetACLLocation = New System.Windows.Forms.Label()
         Me.cmdSettingsSetACLLocation = New System.Windows.Forms.Button()
+        Me.bgwBackupSDDL = New System.ComponentModel.BackgroundWorker()
         Me.TabControl1.SuspendLayout()
         Me.tabBackupSDDL.SuspendLayout()
         Me.tabReplaceSID.SuspendLayout()
@@ -570,11 +570,12 @@ Partial Class frmMain
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(522, 256)
         Me.Controls.Add(Me.TabControl1)
+        Me.Cursor = System.Windows.Forms.Cursors.Default
         Me.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Name = "frmMain"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Form1"
+        Me.Text = "replaceSID"
         Me.TabControl1.ResumeLayout(False)
         Me.tabBackupSDDL.ResumeLayout(False)
         Me.tabBackupSDDL.PerformLayout()

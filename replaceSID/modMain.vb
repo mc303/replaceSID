@@ -116,7 +116,7 @@ Module modMain
 
     Sub enableRunreplace()
         Dim i_enableRun As Integer = 0
-        Dim b_isUri As Boolean
+        ' Dim b_isUri As Boolean
 
         If File.Exists(frmMain.txtSSDLFile.Text) Then
             i_enableRun += 1
@@ -127,14 +127,14 @@ Module modMain
         End If
 
         If Not frmMain.txtSaveOutput.Text = "" Then
-            b_isUri = New Uri(frmMain.txtSaveOutput.Text).IsFile
+            i_enableRun += 1
         End If
 
-        If b_isUri Then
-            If Directory.Exists(Path.GetDirectoryName(frmMain.txtSaveOutput.Text)) Then
-                i_enableRun += 1
-            End If
-        End If
+        'If b_isUri Then
+        '    If Directory.Exists(Path.GetDirectoryName(frmMain.txtSaveOutput.Text)) Then
+        '        i_enableRun += 1
+        '    End If
+        'End If
 
         If i_enableRun = 3 Then
             frmMain.cmdReplaceSIDRun.Enabled = True
@@ -146,23 +146,12 @@ Module modMain
         Dim b_isUri As Boolean
 
         If Not frmMain.txtBackupSDDLbckp.Text = "" Then
-            b_isUri = New Uri(frmMain.txtSaveOutput.Text).IsFile
-            If Not b_isUri Then
-                b_isUri = New Uri(frmMain.txtSaveOutput.Text).IsUnc
-            End If
-        Else
-            b_isUri = False
-        End If
-
-        If b_isUri Then
-            If Directory.Exists(Path.GetDirectoryName(frmMain.txtBackupSDDLbckp.Text)) Then
-                i_enableRun += 1
-            End If
+            i_enableRun += 1
         End If
 
         b_isUri = False
         If Not frmMain.txtBackupSDDLon.Text = "" Then
-            b_isUri = New Uri(frmMain.txtSaveOutput.Text).IsFile
+            b_isUri = New Uri(frmMain.txtBackupSDDLon.Text).IsFile
         End If
 
         If b_isUri Then
@@ -197,20 +186,9 @@ Module modMain
         b_isUri = False
 
         If Not frmMain.txtRestoreSDDLbkcp.Text = "" Then
-            b_isUri = New Uri(frmMain.txtRestoreSDDLbkcp.Text).IsFile
-            If Not b_isUri Then
-                b_isUri = New Uri(frmMain.txtRestoreSDDLbkcp.Text).IsUnc
-            End If
-        Else
-            b_isUri = False
-
-        End If
-
-        If b_isUri Then
-            If Directory.Exists(Path.GetDirectoryName(frmMain.txtRestoreSDDLbkcp.Text)) Then
                 i_enableRun += 1
             End If
-        End If
+
 
         If i_enableRun = 2 Then
             frmMain.cmdRestoreSDDLRun.Enabled = True
@@ -300,6 +278,10 @@ Module modMain
             s_what &= "g"
         End If
 
+        If s_what.EndsWith(",") Then
+            s_what = s_what.Substring(0, (s_what.Length - 1))
+        End If
+
         If s_what.Length >= 1 Then
             s_what = "w:" + s_what + ";"
         End If
@@ -348,8 +330,6 @@ Module modMain
             frmMain.cmdBackupSDDLRun.Enabled = b_state
         End If
     End Sub
-
-
     'Public Delegate Sub runToggleInvoker(ByVal value As Integer)
     'Public Sub runToggle(ByVal value As Integer)
     '    If Sandbox.Label1.InvokeRequired = True Then
