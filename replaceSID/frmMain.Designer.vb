@@ -71,6 +71,12 @@ Partial Class frmMain
         Me.lblSettingsSetACLLocation = New System.Windows.Forms.Label()
         Me.cmdSettingsSetACLLocation = New System.Windows.Forms.Button()
         Me.bgwBackupSDDL = New System.ComponentModel.BackgroundWorker()
+        Me.chkRestoreSDDLIgnoreerr = New System.Windows.Forms.CheckBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.chkRestoreSDDLog = New System.Windows.Forms.CheckBox()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.chkRestoreSDDSilent = New System.Windows.Forms.CheckBox()
+        Me.Label5 = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
         Me.tabBackupSDDL.SuspendLayout()
         Me.tabReplaceSID.SuspendLayout()
@@ -449,6 +455,12 @@ Partial Class frmMain
         '
         'tabRestoreSDDL
         '
+        Me.tabRestoreSDDL.Controls.Add(Me.chkRestoreSDDSilent)
+        Me.tabRestoreSDDL.Controls.Add(Me.Label5)
+        Me.tabRestoreSDDL.Controls.Add(Me.chkRestoreSDDLog)
+        Me.tabRestoreSDDL.Controls.Add(Me.Label4)
+        Me.tabRestoreSDDL.Controls.Add(Me.chkRestoreSDDLIgnoreerr)
+        Me.tabRestoreSDDL.Controls.Add(Me.Label3)
         Me.tabRestoreSDDL.Controls.Add(Me.lblRestoreSDDLon)
         Me.tabRestoreSDDL.Controls.Add(Me.txtRestoreSDDLon)
         Me.tabRestoreSDDL.Controls.Add(Me.cmdRestoreSDDLRun)
@@ -564,6 +576,63 @@ Partial Class frmMain
         Me.cmdSettingsSetACLLocation.TextAlign = System.Drawing.ContentAlignment.TopCenter
         Me.cmdSettingsSetACLLocation.UseVisualStyleBackColor = True
         '
+        'chkRestoreSDDLIgnoreerr
+        '
+        Me.chkRestoreSDDLIgnoreerr.AutoSize = True
+        Me.chkRestoreSDDLIgnoreerr.Location = New System.Drawing.Point(23, 114)
+        Me.chkRestoreSDDLIgnoreerr.Name = "chkRestoreSDDLIgnoreerr"
+        Me.chkRestoreSDDLIgnoreerr.Size = New System.Drawing.Size(46, 17)
+        Me.chkRestoreSDDLIgnoreerr.TabIndex = 53
+        Me.chkRestoreSDDLIgnoreerr.Text = "Yes"
+        Me.chkRestoreSDDLIgnoreerr.UseVisualStyleBackColor = True
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(9, 98)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(65, 13)
+        Me.Label3.TabIndex = 52
+        Me.Label3.Text = "-ignoreerr"
+        '
+        'chkRestoreSDDLog
+        '
+        Me.chkRestoreSDDLog.AutoSize = True
+        Me.chkRestoreSDDLog.Location = New System.Drawing.Point(104, 114)
+        Me.chkRestoreSDDLog.Name = "chkRestoreSDDLog"
+        Me.chkRestoreSDDLog.Size = New System.Drawing.Size(46, 17)
+        Me.chkRestoreSDDLog.TabIndex = 55
+        Me.chkRestoreSDDLog.Text = "Yes"
+        Me.chkRestoreSDDLog.UseVisualStyleBackColor = True
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(90, 98)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(29, 13)
+        Me.Label4.TabIndex = 54
+        Me.Label4.Text = "-log"
+        '
+        'chkRestoreSDDSilent
+        '
+        Me.chkRestoreSDDSilent.AutoSize = True
+        Me.chkRestoreSDDSilent.Location = New System.Drawing.Point(178, 114)
+        Me.chkRestoreSDDSilent.Name = "chkRestoreSDDSilent"
+        Me.chkRestoreSDDSilent.Size = New System.Drawing.Size(46, 17)
+        Me.chkRestoreSDDSilent.TabIndex = 57
+        Me.chkRestoreSDDSilent.Text = "Yes"
+        Me.chkRestoreSDDSilent.UseVisualStyleBackColor = True
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(164, 98)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(42, 13)
+        Me.Label5.TabIndex = 56
+        Me.Label5.Text = "-silent"
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 13.0!)
@@ -637,5 +706,11 @@ Partial Class frmMain
     Friend WithEvents txtSettingsSetACLLocation As System.Windows.Forms.TextBox
     Friend WithEvents lblSettingsSetACLLocation As System.Windows.Forms.Label
     Friend WithEvents cmdSettingsSetACLLocation As System.Windows.Forms.Button
+    Friend WithEvents chkRestoreSDDLIgnoreerr As System.Windows.Forms.CheckBox
+    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents chkRestoreSDDLog As System.Windows.Forms.CheckBox
+    Friend WithEvents Label4 As System.Windows.Forms.Label
+    Friend WithEvents chkRestoreSDDSilent As System.Windows.Forms.CheckBox
+    Friend WithEvents Label5 As System.Windows.Forms.Label
 
 End Class

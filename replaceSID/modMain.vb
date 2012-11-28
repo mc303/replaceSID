@@ -11,12 +11,12 @@ Module modMain
     Function splitSDDL(s_ssdl As String) As String
         ' Call Regex.Matches method.
         ' (S-1-5-21)(\-\d{8,10}){3}(\-\d{3,}){1}
+        ' (S-1-5-21-)\d{8,10}-\d{8,10}-\d{8,10}-\d{3,8}
         ' S-1-5-21-[0-9]{10}-[0-9]{10}-[0-9\-]{0,}
-        Dim matches As MatchCollection = Regex.Matches(s_ssdl, "(S-1-5-21)(\-\d{8,10}){3}(\-\d{3,}){1}}")
+        Dim matches As MatchCollection = Regex.Matches(s_ssdl, "((S-1-5-21)(\-\d{8,10}){3}(\-\d{3,}){1})")
 
-        If matches.Count = 0 Then
-            s_ssdl = s_ssdl
-        End If
+        s_ssdl = s_ssdl
+
         ' Loop over matches.
         For Each m As Match In matches
             ' Loop over captures.
@@ -47,7 +47,7 @@ Module modMain
 
                 ' Store contents in this String.
                 Dim line As String
-                Dim a_line As Array
+                'Dim a_line As Array
                 Dim _lcount As Double = 0
                 Dim s_line As String
                 ' Read first line.
@@ -56,19 +56,14 @@ Module modMain
                 ' Loop over each line in file, While list is Not Nothing.
                 While Not line Is Nothing
                     _lcount += 1
-                    If Not line = "" Then
-                        ' Display to console.
-                        a_line = line.Split(",")
-                        'Console.WriteLine(a_line(2))
-                        'Console.WriteLine(splitSDDL(a_line(2)))
-                        s_line = a_line(0) + "," + a_line(1) + "," + splitSDDL(a_line(2))
+                    If Not line = "" Then                      
+                        s_line = splitSDDL(line)
                         _exportFile.WriteLine(s_line)
-
-                        'frmMain.lblCountLines.Text = _lcount
                     End If
 
                     ' Read in the next line.
                     line = r.ReadLine
+
                     'Exit is the line is empty
                     If line Is "" Then
                         line = Nothing
@@ -114,86 +109,90 @@ Module modMain
         End Try
     End Sub
 
-    Sub enableRunreplace()
+    Function enableReplaceSSDLRun() As Boolean
         Dim i_enableRun As Integer = 0
         ' Dim b_isUri As Boolean
+        Try
+            If File.Exists(frmMain.txtSSDLFile.Text) Then
+                i_enableRun += 1
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
 
-        If File.Exists(frmMain.txtSSDLFile.Text) Then
-            i_enableRun += 1
-        End If
+        Try
+            If File.Exists(frmMain.txtBrowseSIDmap.Text) Then
+                i_enableRun += 1
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
 
-        If File.Exists(frmMain.txtBrowseSIDmap.Text) Then
-            i_enableRun += 1
-        End If
-
-        If Not frmMain.txtSaveOutput.Text = "" Then
-            i_enableRun += 1
-        End If
-
-        'If b_isUri Then
-        '    If Directory.Exists(Path.GetDirectoryName(frmMain.txtSaveOutput.Text)) Then
-        '        i_enableRun += 1
-        '    End If
-        'End If
+        Try
+            If Not frmMain.txtSaveOutput.Text.Length = 0 Then
+                If Directory.Exists(Path.GetDirectoryName(frmMain.txtSaveOutput.Text)) Then
+                    i_enableRun += 1
+                End If
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
 
         If i_enableRun = 3 Then
-            frmMain.cmdReplaceSIDRun.Enabled = True
+            Return True
+        Else
+            Return False
         End If
-    End Sub
+    End Function
 
-    Sub enableRunBackupSDDL()
+    Function enableBackupSDDLRun() As Boolean
         Dim i_enableRun As Integer = 0
-        Dim b_isUri As Boolean
 
         If Not frmMain.txtBackupSDDLbckp.Text = "" Then
             i_enableRun += 1
         End If
 
-        b_isUri = False
-        If Not frmMain.txtBackupSDDLon.Text = "" Then
-            b_isUri = New Uri(frmMain.txtBackupSDDLon.Text).IsFile
-        End If
-
-        If b_isUri Then
-            If Directory.Exists(Path.GetDirectoryName(frmMain.txtBackupSDDLon.Text)) Then
-                i_enableRun += 1
+        Try
+            If Not frmMain.txtBackupSDDLon.Text.Length = 0 Then
+                If Directory.Exists(frmMain.txtBackupSDDLon.Text) Then
+                    i_enableRun += 1
+                End If
             End If
-        End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
 
         If i_enableRun = 2 Then
-            frmMain.cmdBackupSDDLRun.Enabled = True
-        End If
-    End Sub
-
-    Sub enableRestoreSDDLRun()
-        Dim i_enableRun As Integer = 0
-        Dim b_isUri As Boolean
-
-        If Not frmMain.txtRestoreSDDLon.Text = "" Then
-            b_isUri = New Uri(frmMain.txtRestoreSDDLon.Text).IsFile
-            If Not b_isUri Then
-                b_isUri = New Uri(frmMain.txtRestoreSDDLon.Text).IsUnc
-            End If
+            Return True
         Else
-            b_isUri = False
+            Return False
         End If
+    End Function
 
-        If b_isUri Then
-            If Directory.Exists(Path.GetDirectoryName(frmMain.txtRestoreSDDLon.Text)) Then
-                i_enableRun += 1
+    Function enableRestoreSDDLRun() As Boolean
+        Dim i_enableRun As Integer = 0
+
+        Try
+            If Not frmMain.txtRestoreSDDLon.Text = "" Then
+                If Directory.Exists(frmMain.txtRestoreSDDLon.Text) Then
+                    i_enableRun += 1
+                End If
             End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+
+        If Not frmMain.txtRestoreSDDLbkcp.Text.Length = 0 Then
+            i_enableRun += 1
         End If
-        b_isUri = False
-
-        If Not frmMain.txtRestoreSDDLbkcp.Text = "" Then
-                i_enableRun += 1
-            End If
 
 
         If i_enableRun = 2 Then
-            frmMain.cmdRestoreSDDLRun.Enabled = True
+            Return True
+        Else
+            Return False
         End If
-    End Sub
+    End Function
 
 
     Function runSetACLBackupACL() As String
@@ -228,7 +227,7 @@ Module modMain
         'setacl -on d:\data -ot file -actn list -lst "f:sddl;w:d,s,o,g;i:y;oo:y" -rec cont -bckp d:\backup.txt -silent 
         Dim process As New Process()
         Dim s_command As String = frmMain.txtSettingsSetACLLocation.Text
-        Dim s_arguments As String = "-on """ + frmMain.txtRestoreSDDLon.Text + """ -ot file -actn restore -bckp """ + frmMain.txtRestoreSDDLbkcp.Text + """ -silent"
+        Dim s_arguments As String = makeSetACLRestoreCommand(frmMain.txtRestoreSDDLon.Text, frmMain.txtRestoreSDDLbkcp.Text)
         process.StartInfo.UseShellExecute = False
         process.StartInfo.RedirectStandardOutput = True
         process.StartInfo.RedirectStandardError = True
@@ -318,6 +317,48 @@ Module modMain
         Return s_arguments
 
         s_arguments = Nothing
+    End Function
+
+    ' "-on """ + frmMain.txtRestoreSDDLon.Text + """ -ot file -actn restore -bckp """ + frmMain.txtRestoreSDDLbkcp.Text + """ -silent"
+    Function makeSetACLRestoreCommand(s_RestoreSDDLon As String, s_txtRestoreSDDLbkcp As String) As String
+        Dim s_arguments As String = "-on """ + s_RestoreSDDLon + """ -ot file -actn restore -bckp """ + s_txtRestoreSDDLbkcp + """{0}{1}{2}"
+        Dim s_ignoreErr As String = ""
+        Dim s_log As String = ""
+        Dim s_silent As String = ""
+
+        If frmMain.chkRestoreSDDLIgnoreerr.Checked Then
+            s_ignoreErr &= " -ignoreerr"
+        End If
+        If frmMain.chkRestoreSDDLog.Checked Then
+            s_log &= " -log """ + createFilename(s_txtRestoreSDDLbkcp) + """"
+        End If
+        If frmMain.chkRestoreSDDSilent.Checked Then
+            s_silent &= " -silent"
+        End If
+
+        s_arguments = String.Format(s_arguments, s_ignoreErr, s_log, s_silent)
+
+        Return s_arguments
+
+    End Function
+
+    Function createFilename(ByVal _filename As String) As String
+        Dim count As Integer = 0
+        Dim s_extension As String = ".log"
+
+        ' s_extension = Path.GetExtension(_filename)
+        _filename = Path.GetFileNameWithoutExtension(_filename)
+
+        While True
+            _filename = _filename + "." + count.ToString("0000") + "." + s_extension
+            If Not IO.File.Exists(_filename) Then
+                Return _filename
+                Exit While
+            End If
+            count += 1
+        End While
+
+        Return ""
     End Function
 
     Public Sub setStateCMDRunBackupSDDL(ByVal b_state As Boolean)

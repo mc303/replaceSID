@@ -7,7 +7,6 @@
 
     End Sub
 
-
     Private Sub frmProcess_FormClosing(ByVal sender As Object, _
             ByVal e As System.Windows.Forms.FormClosingEventArgs) _
             Handles Me.FormClosing

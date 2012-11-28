@@ -55,7 +55,7 @@ Public Class frmMain
         Me.lblSaveOutput.Text = "Save replaced SSDL file with SIDMap csv file"
 
         Me.cmdReplaceSIDRun.Text = "Run replace..."
-        Me.cmdReplaceSIDRun.Enabled = False
+        'Me.cmdReplaceSIDRun.Enabled = False
 
         Me.chkBackupSDDLcont.Checked = My.Settings.cont
         Me.chkBackupSDDLobj.Checked = My.Settings.obj
@@ -77,12 +77,12 @@ Public Class frmMain
         Me.lblBackupSDDLCL.Text = "-actn list [-lst ""f:Format;w:What;i:ListInherited;s:DisplaySID;oo:OrphanedOnly""]"
         Me.cmdBackupSDDLbckp.Text = "Browse..."
         Me.cmdBackupSDDLRun.Text = "Backup ACL..."
-        Me.cmdBackupSDDLRun.Enabled = False
+        ' Me.cmdBackupSDDLRun.Enabled = False
 
         Me.cmdRestoreSDDLRun.Text = "Restore ACL..."
         Me.lblRestoreSDDLon.Text = "SetACL -on [Folder] -ot file -actn restore"
-        Me.lblRestoreSDDLbkcp.Text = "-bckp [Filename]"
-        Me.cmdRestoreSDDLRun.Enabled = False
+        Me.lblRestoreSDDLbkcp.Text = "-bckp [Filename] -rec cont -silent"
+        ' Me.cmdRestoreSDDLRun.Enabled = False
 
         Me.lblSettingsSetACLLocation.Text = "SetACL file locatoin"
         Me.cmdSettingsSetACLLocation.Text = "Browse..."
@@ -109,12 +109,7 @@ Public Class frmMain
     ' *****************************************************************************************************************************************
 
 #Region "Command Buttons"
-    Private Sub cmdRun_Click(sender As System.Object, e As System.EventArgs) Handles cmdReplaceSIDRun.Click
-
-        bgwLoadSIDMap.RunWorkerAsync()
-
-    End Sub
-
+   
     Private Sub cmdBrowseSSDL_Click(sender As System.Object, e As System.EventArgs) Handles cmdBrowseSSDL.Click
 
         ofdSSDLFile.Title = "Open SSDL file to replace with SIDMap csv file"
@@ -124,7 +119,7 @@ Public Class frmMain
         If ofdSSDLFile.ShowDialog = System.Windows.Forms.DialogResult.OK Then
             Me.txtSSDLFile.Text = ofdSSDLFile.FileName
         End If
-        Call enableRunreplace()
+        Call enableReplaceSSDLRun()
     End Sub
 
     Private Sub cmdBrowseSIDmap_Click(sender As System.Object, e As System.EventArgs) Handles cmdBrowseSIDmap.Click
@@ -136,7 +131,7 @@ Public Class frmMain
         If ofdSSDLFile.ShowDialog = System.Windows.Forms.DialogResult.OK Then
             Me.txtBrowseSIDmap.Text = ofdSSDLFile.FileName
         End If
-        Call enableRunreplace()
+        Call enableReplaceSSDLRun()
     End Sub
 
     Private Sub cmdSaveOutput_Click(sender As System.Object, e As System.EventArgs) Handles cmdSaveOutput.Click
@@ -147,7 +142,7 @@ Public Class frmMain
         If sfdSSDLFile.ShowDialog = System.Windows.Forms.DialogResult.OK Then
             Me.txtSaveOutput.Text = sfdSSDLFile.FileName
         End If
-        Call enableRunreplace()
+        Call enableReplaceSSDLRun()
     End Sub
 
     Private Sub cmdSaveSDDLBackup_Click(sender As System.Object, e As System.EventArgs) Handles cmdBackupSDDLbckp.Click
@@ -159,23 +154,38 @@ Public Class frmMain
             Me.txtBackupSDDLbckp.Text = sfdSSDLFile.FileName
         End If
 
-        Call enableRunBackupSDDL()
+        Call enableBackupSDDLRun()
     End Sub
 
-    Private Sub cmdRunBackupSDDL_Click(sender As System.Object, e As System.EventArgs) Handles cmdBackupSDDLRun.Click
-
-        Call setACLLocationNotSet()
-        processThread.Show("")
-        debugOutput = runSetACLBackupACL()
-
+    Private Sub cmdBackupSDDLRun_Click(sender As System.Object, e As System.EventArgs) Handles cmdBackupSDDLRun.Click
+        If enableBackupSDDLRun() Then
+            Call setACLLocationNotSet()
+            processThread.Show("")
+            debugOutput = runSetACLBackupACL()
+        Else
+            MessageBox.Show("Not all parameters are set!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
     End Sub
+
+
+    Private Sub cmdRun_Click(sender As System.Object, e As System.EventArgs) Handles cmdReplaceSIDRun.Click
+ 
+        If enableReplaceSSDLRun() Then
+            bgwLoadSIDMap.RunWorkerAsync()
+        Else
+            MessageBox.Show("Not all parameters are set!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
+    End Sub
+
 
     Private Sub cmdRestoreSDDLRun_Click(sender As System.Object, e As System.EventArgs) Handles cmdRestoreSDDLRun.Click
-
-        Call setACLLocationNotSet()
-        processThread.Show("")
-        debugOutput = runSetACLRestoreACL()
-
+        If enableRestoreSDDLRun() Then
+            Call setACLLocationNotSet()
+            processThread.Show("")
+            debugOutput = runSetACLRestoreACL()
+        Else
+            MessageBox.Show("Not all parameters are set!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
     End Sub
 
 
