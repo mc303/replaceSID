@@ -1,5 +1,6 @@
 ﻿Imports System.Threading
 Imports System.ComponentModel
+Imports System.IO
 
 Public Class frmMain
     Dim debugOption As Boolean = False
@@ -84,9 +85,13 @@ Public Class frmMain
         Me.lblRestoreSDDLbkcp.Text = "-bckp [Filename] -rec cont -silent"
         ' Me.cmdRestoreSDDLRun.Enabled = False
 
-        Me.lblSettingsSetACLLocation.Text = "SetACL file locatoin"
+        Me.lblSettingsSetACLLocation.Text = "SetACL file location"
         Me.cmdSettingsSetACLLocation.Text = "Browse..."
-        Me.txtSettingsSetACLLocation.Text = My.Settings.SetACLLocation
+        Me.txtSettingsSetACLLocation.Text = ""
+        If File.Exists(My.Application.Info.DirectoryPath + "\SetACL.exe") Then
+            Me.txtSettingsSetACLLocation.Text = My.Application.Info.DirectoryPath + "\SetACL.exe"
+        End If
+
 
         If debugOption Then
             Me.txtBackupSDDLbckp.Text = "C:\Users\admin.itvalue\Documents\backup.sddl.txt"
@@ -272,5 +277,60 @@ Public Class frmMain
     Private Sub bgwReplaceSID_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgwReplaceSID.RunWorkerCompleted
         'MsgBox("Ready", MsgBoxStyle.Information, "Message")
         Call processThread.Close()
+    End Sub
+
+    Private Sub chkBackupSDDLDisplaySIDyes_CheckedChanged(sender As Object, e As EventArgs) Handles chkBackupSDDLDisplaySIDyes.CheckedChanged
+        If Me.chkBackupSDDLDisplaySIDyes.Checked Then
+            Me.chkBackupSDDLDisplaySIDno.Checked = False
+            Me.chkBackupSDDLDisplaySIDboth.Checked = False
+        End If
+    End Sub
+
+    Private Sub chkBackupSDDLDisplaySIDno_CheckedChanged(sender As Object, e As EventArgs) Handles chkBackupSDDLDisplaySIDno.CheckedChanged
+        If Me.chkBackupSDDLDisplaySIDno.Checked Then
+            Me.chkBackupSDDLDisplaySIDyes.Checked = False
+            Me.chkBackupSDDLDisplaySIDboth.Checked = False
+        End If
+    End Sub
+
+    Private Sub chkBackupSDDLDisplaySIDboth_CheckedChanged(sender As Object, e As EventArgs) Handles chkBackupSDDLDisplaySIDboth.CheckedChanged
+        If Me.chkBackupSDDLDisplaySIDboth.Checked Then
+            Me.chkBackupSDDLDisplaySIDyes.Checked = False
+            Me.chkBackupSDDLDisplaySIDno.Checked = False
+        End If
+    End Sub
+
+    Private Sub chkBackupSDDLsddl_CheckedChanged(sender As Object, e As EventArgs) Handles chkBackupSDDLsddl.CheckedChanged
+        If Me.chkBackupSDDLsddl.Checked Then
+            Me.chkBackupSDDLown.Checked = False
+            Me.chkBackupSDDLtab.Checked = False
+            Me.chkBackupSDDLDisplaySIDyes.Enabled = False
+            Me.chkBackupSDDLDisplaySIDboth.Enabled = False
+            Me.chkBackupSDDLDisplaySIDno.Enabled = False
+        Else
+            Me.chkBackupSDDLDisplaySIDyes.Enabled = True
+            Me.chkBackupSDDLDisplaySIDboth.Enabled = True
+            Me.chkBackupSDDLDisplaySIDno.Enabled = True
+        End If
+    End Sub
+
+    Private Sub chkBackupSDDLown_CheckedChanged(sender As Object, e As EventArgs) Handles chkBackupSDDLown.CheckedChanged
+        If Me.chkBackupSDDLown.Checked Then
+            Me.chkBackupSDDLsddl.Checked = False
+            Me.chkBackupSDDLtab.Checked = False
+            Me.chkBackupSDDLDisplaySIDyes.Enabled = True
+            Me.chkBackupSDDLDisplaySIDboth.Enabled = True
+            Me.chkBackupSDDLDisplaySIDno.Enabled = True
+        End If
+    End Sub
+
+    Private Sub chkBackupSDDLtab_CheckedChanged(sender As Object, e As EventArgs) Handles chkBackupSDDLtab.CheckedChanged
+        If Me.chkBackupSDDLtab.Checked Then
+            Me.chkBackupSDDLsddl.Checked = False
+            Me.chkBackupSDDLown.Checked = False
+            Me.chkBackupSDDLDisplaySIDyes.Enabled = True
+            Me.chkBackupSDDLDisplaySIDboth.Enabled = True
+            Me.chkBackupSDDLDisplaySIDno.Enabled = True
+        End If
     End Sub
 End Class

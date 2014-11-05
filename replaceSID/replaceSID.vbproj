@@ -8,11 +8,11 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{483FCCA3-094A-4306-94A2-6C922D02BE67}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>replaceSID.My.MyApplication</StartupObject>
+    <StartupObject>replaceSID.frmMain</StartupObject>
     <RootNamespace>replaceSID</RootNamespace>
     <AssemblyName>replaceSID</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <MyType>WindowsForms</MyType>
+    <MyType>WindowsFormsWithCustomSubMain</MyType>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
@@ -171,10 +171,13 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_BuildVersioningStyle="None.None.Increment.DeltaBaseYearDayOfYear" BuildVersion_StartDate="2012/11/16" />
+      <UserProperties BuildVersion_StartDate="2012/11/16" BuildVersion_BuildVersioningStyle="None.None.Increment.DeltaBaseYearDayOfYear" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

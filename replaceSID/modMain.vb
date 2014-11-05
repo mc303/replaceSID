@@ -258,11 +258,25 @@ Module modMain
     End Sub
 
     Function makeSetACLBackupCommand() As String
-        Dim s_arguments As String = "-on """ + frmMain.txtBackupSDDLon.Text + """ -ot file -actn list -lst ""f:sddl;"
+        '-actn list [-lst "f:Format;w:What;i:ListInherited;s:DisplaySID;oo:OrphanedOnly"] [-bckp Filename]
+        Dim s_arguments As String = "-on """ + frmMain.txtBackupSDDLon.Text + """ -ot file -actn list -lst "
+        Dim s_format As String = ""
         Dim s_what As String = ""
+        Dim s_displaySID As String = ""
         Dim s_listInherited As String = ""
         Dim s_orphanedOnly As String = ""
         Dim s_recursion As String = ""
+
+
+        If frmMain.chkBackupSDDLsddl.Checked Then
+            s_format = "f:sddl;"
+        End If
+        If frmMain.chkBackupSDDLown.Checked Then
+            s_format = "f:own;"
+        End If
+        If frmMain.chkBackupSDDLtab.Checked Then
+            s_format = "f:tab;"
+        End If
 
         If frmMain.chkBackupSDDLdacl.Checked Then
             s_what &= "d,"
@@ -289,6 +303,16 @@ Module modMain
             s_listInherited &= "i:y;"
         End If
 
+        If frmMain.chkBackupSDDLDisplaySIDyes.Checked Then
+            s_displaySID = "s:y;"
+        End If
+        If frmMain.chkBackupSDDLDisplaySIDno.Checked Then
+            s_displaySID = "s:n;"
+        End If
+        If frmMain.chkBackupSDDLDisplaySIDboth.Checked Then
+            s_displaySID = "s:b;"
+        End If
+
         If frmMain.chkBackupSDDLoo.Checked Then
             s_orphanedOnly &= "oo:y"
         End If
@@ -305,7 +329,7 @@ Module modMain
             s_recursion = " -rec cont_obj"
         End If
 
-        s_arguments = s_arguments + s_what + s_listInherited + s_orphanedOnly
+        s_arguments = s_arguments + s_what + s_listInherited + s_displaySID + s_orphanedOnly
 
         If s_arguments.EndsWith(";") Then
             s_arguments = s_arguments.Substring(0, (s_arguments.Length - 1))
@@ -326,15 +350,15 @@ Module modMain
         Dim s_log As String = ""
         Dim s_silent As String = ""
 
-        If frmMain.chkRestoreSDDLIgnoreerr.Checked Then
-            s_ignoreErr &= " -ignoreerr"
-        End If
-        If frmMain.chkRestoreSDDLog.Checked Then
-            s_log &= " -log """ + createFilename(s_txtRestoreSDDLbkcp) + """"
-        End If
-        If frmMain.chkRestoreSDDSilent.Checked Then
-            s_silent &= " -silent"
-        End If
+        'If frmMain.chkRestoreSDDLIgnoreerr.Checked Then
+        '    s_ignoreErr &= " -ignoreerr"
+        'End If
+        'If frmMain.chkRestoreSDDLog.Checked Then
+        '    s_log &= " -log """ + createFilename(s_txtRestoreSDDLbkcp) + """"
+        'End If
+        'If frmMain.chkRestoreSDDSilent.Checked Then
+        '    s_silent &= " -silent"
+        'End If
 
         s_arguments = String.Format(s_arguments, s_ignoreErr, s_log, s_silent)
 
