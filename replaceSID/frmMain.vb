@@ -333,4 +333,32 @@ Public Class frmMain
             Me.chkBackupSDDLDisplaySIDno.Enabled = True
         End If
     End Sub
+
+  
+    Private Sub cmdFindSIDSDDL_Click(sender As Object, e As EventArgs) Handles cmdFindSIDSDDL.Click
+
+        ofdSSDLFile.Title = "Open SSDL file to replace with SIDMap csv file"
+        ofdSSDLFile.FileName = ""
+        ofdSSDLFile.Filter = "Text (*.txt) |*.txt|All Files|*.*"
+
+        If ofdSSDLFile.ShowDialog = System.Windows.Forms.DialogResult.OK Then
+            Me.txtListSIDinSDDLFile.Text = ofdSSDLFile.FileName
+        End If
+    End Sub
+
+    Private Sub cmdListAllSDFileRun_Click(sender As Object, e As EventArgs) Handles cmdListAllSDFileRun.Click
+        Call createSIDlistFromFile(Me.txtListSIDinSDDLFile.Text)
+        Call writeSIDfileFromSDDL(Me.txtCreateSDDLtoSIDFile.Text)
+    End Sub
+
+    Private Sub cmdCreateSDDLtoSIDFile_Click(sender As Object, e As EventArgs) Handles cmdCreateSDDLtoSIDFile.Click
+
+        sfdSSDLFile.Title = "Save replaced SSDL file with SIDMap csv file"
+        sfdSSDLFile.FileName = "export.sid.txt"
+        sfdSSDLFile.Filter = "Text (*.txt) |*.txt"
+
+        If sfdSSDLFile.ShowDialog = System.Windows.Forms.DialogResult.OK Then
+            Me.txtCreateSDDLtoSIDFile.Text = sfdSSDLFile.FileName
+        End If
+    End Sub
 End Class

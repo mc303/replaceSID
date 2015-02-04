@@ -5,6 +5,7 @@ Imports System.IO
 Module modMain
     Public Delegate Sub _setState(ByVal b_state As Boolean)
     Public dic_sidmap As New Dictionary(Of String, String)
+    Public _dic_sidlist As New Dictionary(Of String, String)
     Public _exportFile As StreamWriter
 
     
@@ -34,6 +35,30 @@ Module modMain
         Return s_ssdl
     End Function
 
+    Function addToSidList(s_ssdl As String) As String
+        ' Call Regex.Matches method.
+        ' (S-1-5-21)(\-\d{8,10}){3}(\-\d{3,}){1}
+        ' (S-1-5-21-)\d{8,10}-\d{8,10}-\d{8,10}-\d{3,8}
+        ' S-1-5-21-[0-9]{10}-[0-9]{10}-[0-9\-]{0,}
+        Dim matches As MatchCollection = Regex.Matches(s_ssdl, "((S-1-5-21)(\-\d{8,10}){3}(\-\d{3,}){1})")
+
+        s_ssdl = s_ssdl
+
+        ' Loop over matches.
+        For Each m As Match In matches
+            ' Loop over captures.
+            For Each c As Capture In m.Captures
+                ' Display.
+                ' Console.WriteLine("Index={0}, Value={1}", c.Index, c.Value)
+                If Not _dic_sidlist.ContainsKey(c.Value) Then
+                    '  s_foundsid = dic_sidmap(c.Value).ToString
+                    _dic_sidlist.Add(c.Value, c.Value)
+                End If
+            Next
+        Next
+        Return s_ssdl
+    End Function
+
     Sub importSDDLfile(s_ssdlFile As String, s_ssdlExportFile As String)
         ' Open file.txt with the Using statement.
         Try
@@ -56,10 +81,11 @@ Module modMain
                 ' Loop over each line in file, While list is Not Nothing.
                 While Not line Is Nothing
                     _lcount += 1
-                    If Not line = "" Then                      
+                    If Not line = "" Then
                         s_line = splitSDDL(line)
                         _exportFile.WriteLine(s_line)
                     End If
+
 
                     ' Read in the next line.
                     line = r.ReadLine
@@ -75,6 +101,55 @@ Module modMain
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "Error")
         End Try
+    End Sub
+
+    Sub createSIDlistFromFile(s_ssdlFile As String)
+        ' Open file.txt with the Using statement.
+        Try
+            Using r As StreamReader = New StreamReader(s_ssdlFile)
+
+                ' Store contents in this String.
+                Dim line As String
+                'Dim a_line As Array
+                Dim _lcount As Double = 0
+                Dim s_line As String
+                ' Read first line.
+                line = r.ReadLine
+
+                ' Loop over each line in file, While list is Not Nothing.
+                While Not line Is Nothing
+                    _lcount += 1
+                    If Not line = "" Then
+                        s_line = addToSidList(line)
+                    End If
+
+                    ' Read in the next line.
+                    line = r.ReadLine
+
+                    'Exit is the line is empty
+                    If line Is "" Then
+                        line = Nothing
+                    End If
+
+                End While
+                r.Close()
+            End Using
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "Error")
+        End Try
+    End Sub
+
+    Sub writeSIDfileFromSDDL(ByVal s_ssdlExportFile As String)
+        Try
+            _exportFile = New StreamWriter(s_ssdlExportFile)
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "Error")
+        End Try
+
+        For Each _sid In _dic_sidlist
+            _exportFile.WriteLine(_sid.Value)
+        Next
+        _exportFile.Close()
     End Sub
 
     Sub loadSIDMap(s_sidMapFile As String)

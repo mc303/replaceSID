@@ -78,12 +78,21 @@ Partial Class frmMain
         Me.txtSettingsSetACLLocation = New System.Windows.Forms.TextBox()
         Me.lblSettingsSetACLLocation = New System.Windows.Forms.Label()
         Me.cmdSettingsSetACLLocation = New System.Windows.Forms.Button()
+        Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.cmdListAllSDFileRun = New System.Windows.Forms.Button()
+        Me.txtListSIDinSDDLFile = New System.Windows.Forms.TextBox()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.cmdFindSIDSDDL = New System.Windows.Forms.Button()
         Me.bgwBackupSDDL = New System.ComponentModel.BackgroundWorker()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.txtCreateSDDLtoSIDFile = New System.Windows.Forms.TextBox()
+        Me.cmdCreateSDDLtoSIDFile = New System.Windows.Forms.Button()
         Me.TabControl1.SuspendLayout()
         Me.tabBackupSDDL.SuspendLayout()
         Me.tabReplaceSID.SuspendLayout()
         Me.tabRestoreSDDL.SuspendLayout()
         Me.tabSettings.SuspendLayout()
+        Me.TabPage1.SuspendLayout()
         Me.SuspendLayout()
         '
         'ofdSSDLFile
@@ -103,6 +112,7 @@ Partial Class frmMain
         Me.TabControl1.Controls.Add(Me.tabReplaceSID)
         Me.TabControl1.Controls.Add(Me.tabRestoreSDDL)
         Me.TabControl1.Controls.Add(Me.tabSettings)
+        Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Cursor = System.Windows.Forms.Cursors.Default
         Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl1.Location = New System.Drawing.Point(0, 0)
@@ -682,6 +692,96 @@ Partial Class frmMain
         Me.cmdSettingsSetACLLocation.TextAlign = System.Drawing.ContentAlignment.TopCenter
         Me.cmdSettingsSetACLLocation.UseVisualStyleBackColor = True
         '
+        'TabPage1
+        '
+        Me.TabPage1.Controls.Add(Me.Label6)
+        Me.TabPage1.Controls.Add(Me.txtCreateSDDLtoSIDFile)
+        Me.TabPage1.Controls.Add(Me.cmdCreateSDDLtoSIDFile)
+        Me.TabPage1.Controls.Add(Me.cmdListAllSDFileRun)
+        Me.TabPage1.Controls.Add(Me.txtListSIDinSDDLFile)
+        Me.TabPage1.Controls.Add(Me.Label5)
+        Me.TabPage1.Controls.Add(Me.cmdFindSIDSDDL)
+        Me.TabPage1.Location = New System.Drawing.Point(4, 25)
+        Me.TabPage1.Name = "TabPage1"
+        Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage1.Size = New System.Drawing.Size(514, 227)
+        Me.TabPage1.TabIndex = 4
+        Me.TabPage1.Text = "TabPage1"
+        Me.TabPage1.UseVisualStyleBackColor = True
+        '
+        'cmdListAllSDFileRun
+        '
+        Me.cmdListAllSDFileRun.FlatAppearance.BorderSize = 0
+        Me.cmdListAllSDFileRun.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.cmdListAllSDFileRun.Location = New System.Drawing.Point(384, 193)
+        Me.cmdListAllSDFileRun.Name = "cmdListAllSDFileRun"
+        Me.cmdListAllSDFileRun.Size = New System.Drawing.Size(127, 30)
+        Me.cmdListAllSDFileRun.TabIndex = 50
+        Me.cmdListAllSDFileRun.Text = "Run merge..."
+        Me.cmdListAllSDFileRun.UseVisualStyleBackColor = True
+        '
+        'txtListSIDinSDDLFile
+        '
+        Me.txtListSIDinSDDLFile.BackColor = System.Drawing.SystemColors.HighlightText
+        Me.txtListSIDinSDDLFile.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.txtListSIDinSDDLFile.Location = New System.Drawing.Point(8, 22)
+        Me.txtListSIDinSDDLFile.Name = "txtListSIDinSDDLFile"
+        Me.txtListSIDinSDDLFile.ReadOnly = True
+        Me.txtListSIDinSDDLFile.Size = New System.Drawing.Size(398, 21)
+        Me.txtListSIDinSDDLFile.TabIndex = 30
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(5, 6)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(269, 13)
+        Me.Label5.TabIndex = 32
+        Me.Label5.Text = "Open SSDL file to merge with SIDMap csv file"
+        '
+        'cmdFindSIDSDDL
+        '
+        Me.cmdFindSIDSDDL.FlatAppearance.BorderSize = 0
+        Me.cmdFindSIDSDDL.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.cmdFindSIDSDDL.Location = New System.Drawing.Point(410, 22)
+        Me.cmdFindSIDSDDL.Name = "cmdFindSIDSDDL"
+        Me.cmdFindSIDSDDL.Size = New System.Drawing.Size(101, 21)
+        Me.cmdFindSIDSDDL.TabIndex = 31
+        Me.cmdFindSIDSDDL.Text = "Browse"
+        Me.cmdFindSIDSDDL.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.cmdFindSIDSDDL.UseVisualStyleBackColor = True
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(5, 49)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(130, 13)
+        Me.Label6.TabIndex = 53
+        Me.Label6.Text = "Open SIDMap csv file"
+        '
+        'txtCreateSDDLtoSIDFile
+        '
+        Me.txtCreateSDDLtoSIDFile.BackColor = System.Drawing.SystemColors.HighlightText
+        Me.txtCreateSDDLtoSIDFile.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.txtCreateSDDLtoSIDFile.Location = New System.Drawing.Point(8, 67)
+        Me.txtCreateSDDLtoSIDFile.Name = "txtCreateSDDLtoSIDFile"
+        Me.txtCreateSDDLtoSIDFile.ReadOnly = True
+        Me.txtCreateSDDLtoSIDFile.Size = New System.Drawing.Size(398, 21)
+        Me.txtCreateSDDLtoSIDFile.TabIndex = 51
+        '
+        'cmdCreateSDDLtoSIDFile
+        '
+        Me.cmdCreateSDDLtoSIDFile.FlatAppearance.BorderSize = 0
+        Me.cmdCreateSDDLtoSIDFile.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.cmdCreateSDDLtoSIDFile.Location = New System.Drawing.Point(410, 67)
+        Me.cmdCreateSDDLtoSIDFile.Name = "cmdCreateSDDLtoSIDFile"
+        Me.cmdCreateSDDLtoSIDFile.Size = New System.Drawing.Size(101, 21)
+        Me.cmdCreateSDDLtoSIDFile.TabIndex = 52
+        Me.cmdCreateSDDLtoSIDFile.Text = "Browse"
+        Me.cmdCreateSDDLtoSIDFile.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.cmdCreateSDDLtoSIDFile.UseVisualStyleBackColor = True
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 13.0!)
@@ -703,6 +803,8 @@ Partial Class frmMain
         Me.tabRestoreSDDL.PerformLayout()
         Me.tabSettings.ResumeLayout(False)
         Me.tabSettings.PerformLayout()
+        Me.TabPage1.ResumeLayout(False)
+        Me.TabPage1.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -763,5 +865,13 @@ Partial Class frmMain
     Friend WithEvents chkBackupSDDLtab As System.Windows.Forms.CheckBox
     Friend WithEvents chkBackupSDDLsddl As System.Windows.Forms.CheckBox
     Friend WithEvents Label4 As System.Windows.Forms.Label
+    Friend WithEvents TabPage1 As System.Windows.Forms.TabPage
+    Friend WithEvents txtListSIDinSDDLFile As System.Windows.Forms.TextBox
+    Friend WithEvents Label5 As System.Windows.Forms.Label
+    Friend WithEvents cmdFindSIDSDDL As System.Windows.Forms.Button
+    Friend WithEvents cmdListAllSDFileRun As System.Windows.Forms.Button
+    Friend WithEvents Label6 As System.Windows.Forms.Label
+    Friend WithEvents txtCreateSDDLtoSIDFile As System.Windows.Forms.TextBox
+    Friend WithEvents cmdCreateSDDLtoSIDFile As System.Windows.Forms.Button
 
 End Class
