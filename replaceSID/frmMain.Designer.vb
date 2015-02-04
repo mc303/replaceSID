@@ -28,6 +28,14 @@ Partial Class frmMain
         Me.sfdSSDLFile = New System.Windows.Forms.SaveFileDialog()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.tabBackupSDDL = New System.Windows.Forms.TabPage()
+        Me.chkBackupSDDLown = New System.Windows.Forms.CheckBox()
+        Me.chkBackupSDDLtab = New System.Windows.Forms.CheckBox()
+        Me.chkBackupSDDLsddl = New System.Windows.Forms.CheckBox()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.chkBackupSDDLDisplaySIDno = New System.Windows.Forms.CheckBox()
+        Me.chkBackupSDDLDisplaySIDboth = New System.Windows.Forms.CheckBox()
+        Me.chkBackupSDDLDisplaySIDyes = New System.Windows.Forms.CheckBox()
+        Me.Label3 = New System.Windows.Forms.Label()
         Me.chkBackupSDDLobj = New System.Windows.Forms.CheckBox()
         Me.chkBackupSDDLcont_obj = New System.Windows.Forms.CheckBox()
         Me.chkBackupSDDLcont = New System.Windows.Forms.CheckBox()
@@ -71,14 +79,6 @@ Partial Class frmMain
         Me.lblSettingsSetACLLocation = New System.Windows.Forms.Label()
         Me.cmdSettingsSetACLLocation = New System.Windows.Forms.Button()
         Me.bgwBackupSDDL = New System.ComponentModel.BackgroundWorker()
-        Me.chkBackupSDDLDisplaySIDno = New System.Windows.Forms.CheckBox()
-        Me.chkBackupSDDLDisplaySIDboth = New System.Windows.Forms.CheckBox()
-        Me.chkBackupSDDLDisplaySIDyes = New System.Windows.Forms.CheckBox()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.chkBackupSDDLown = New System.Windows.Forms.CheckBox()
-        Me.chkBackupSDDLtab = New System.Windows.Forms.CheckBox()
-        Me.chkBackupSDDLsddl = New System.Windows.Forms.CheckBox()
-        Me.Label4 = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
         Me.tabBackupSDDL.SuspendLayout()
         Me.tabReplaceSID.SuspendLayout()
@@ -103,6 +103,7 @@ Partial Class frmMain
         Me.TabControl1.Controls.Add(Me.tabReplaceSID)
         Me.TabControl1.Controls.Add(Me.tabRestoreSDDL)
         Me.TabControl1.Controls.Add(Me.tabSettings)
+        Me.TabControl1.Cursor = System.Windows.Forms.Cursors.Default
         Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl1.Location = New System.Drawing.Point(0, 0)
         Me.TabControl1.Name = "TabControl1"
@@ -147,6 +148,90 @@ Partial Class frmMain
         Me.tabBackupSDDL.TabIndex = 1
         Me.tabBackupSDDL.Text = "Backup SDDL"
         Me.tabBackupSDDL.UseVisualStyleBackColor = True
+        '
+        'chkBackupSDDLown
+        '
+        Me.chkBackupSDDLown.AutoSize = True
+        Me.chkBackupSDDLown.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.chkBackupSDDLown.Location = New System.Drawing.Point(121, 149)
+        Me.chkBackupSDDLown.Name = "chkBackupSDDLown"
+        Me.chkBackupSDDLown.Size = New System.Drawing.Size(70, 17)
+        Me.chkBackupSDDLown.TabIndex = 59
+        Me.chkBackupSDDLown.Text = "csv/own"
+        Me.chkBackupSDDLown.UseVisualStyleBackColor = True
+        '
+        'chkBackupSDDLtab
+        '
+        Me.chkBackupSDDLtab.AutoSize = True
+        Me.chkBackupSDDLtab.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.chkBackupSDDLtab.Location = New System.Drawing.Point(121, 172)
+        Me.chkBackupSDDLtab.Name = "chkBackupSDDLtab"
+        Me.chkBackupSDDLtab.Size = New System.Drawing.Size(41, 17)
+        Me.chkBackupSDDLtab.TabIndex = 58
+        Me.chkBackupSDDLtab.Text = "tab"
+        Me.chkBackupSDDLtab.UseVisualStyleBackColor = True
+        '
+        'chkBackupSDDLsddl
+        '
+        Me.chkBackupSDDLsddl.AutoSize = True
+        Me.chkBackupSDDLsddl.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.chkBackupSDDLsddl.Location = New System.Drawing.Point(121, 126)
+        Me.chkBackupSDDLsddl.Name = "chkBackupSDDLsddl"
+        Me.chkBackupSDDLsddl.Size = New System.Drawing.Size(46, 17)
+        Me.chkBackupSDDLsddl.TabIndex = 57
+        Me.chkBackupSDDLsddl.Text = "sddl"
+        Me.chkBackupSDDLsddl.UseVisualStyleBackColor = True
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(109, 110)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(52, 13)
+        Me.Label4.TabIndex = 56
+        Me.Label4.Text = "Format:"
+        '
+        'chkBackupSDDLDisplaySIDno
+        '
+        Me.chkBackupSDDLDisplaySIDno.AutoSize = True
+        Me.chkBackupSDDLDisplaySIDno.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.chkBackupSDDLDisplaySIDno.Location = New System.Drawing.Point(326, 149)
+        Me.chkBackupSDDLDisplaySIDno.Name = "chkBackupSDDLDisplaySIDno"
+        Me.chkBackupSDDLDisplaySIDno.Size = New System.Drawing.Size(38, 17)
+        Me.chkBackupSDDLDisplaySIDno.TabIndex = 54
+        Me.chkBackupSDDLDisplaySIDno.Text = "No"
+        Me.chkBackupSDDLDisplaySIDno.UseVisualStyleBackColor = True
+        '
+        'chkBackupSDDLDisplaySIDboth
+        '
+        Me.chkBackupSDDLDisplaySIDboth.AutoSize = True
+        Me.chkBackupSDDLDisplaySIDboth.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.chkBackupSDDLDisplaySIDboth.Location = New System.Drawing.Point(326, 172)
+        Me.chkBackupSDDLDisplaySIDboth.Name = "chkBackupSDDLDisplaySIDboth"
+        Me.chkBackupSDDLDisplaySIDboth.Size = New System.Drawing.Size(49, 17)
+        Me.chkBackupSDDLDisplaySIDboth.TabIndex = 53
+        Me.chkBackupSDDLDisplaySIDboth.Text = "Both"
+        Me.chkBackupSDDLDisplaySIDboth.UseVisualStyleBackColor = True
+        '
+        'chkBackupSDDLDisplaySIDyes
+        '
+        Me.chkBackupSDDLDisplaySIDyes.AutoSize = True
+        Me.chkBackupSDDLDisplaySIDyes.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.chkBackupSDDLDisplaySIDyes.Location = New System.Drawing.Point(326, 126)
+        Me.chkBackupSDDLDisplaySIDyes.Name = "chkBackupSDDLDisplaySIDyes"
+        Me.chkBackupSDDLDisplaySIDyes.Size = New System.Drawing.Size(42, 17)
+        Me.chkBackupSDDLDisplaySIDyes.TabIndex = 52
+        Me.chkBackupSDDLDisplaySIDyes.Text = "Yes"
+        Me.chkBackupSDDLDisplaySIDyes.UseVisualStyleBackColor = True
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(314, 110)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(76, 13)
+        Me.Label3.TabIndex = 51
+        Me.Label3.Text = "DisplaySID:"
         '
         'chkBackupSDDLobj
         '
@@ -569,6 +654,7 @@ Partial Class frmMain
         'txtSettingsSetACLLocation
         '
         Me.txtSettingsSetACLLocation.BackColor = System.Drawing.SystemColors.HighlightText
+        Me.txtSettingsSetACLLocation.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.txtSettingsSetACLLocation.Location = New System.Drawing.Point(8, 22)
         Me.txtSettingsSetACLLocation.Name = "txtSettingsSetACLLocation"
         Me.txtSettingsSetACLLocation.ReadOnly = True
@@ -595,90 +681,6 @@ Partial Class frmMain
         Me.cmdSettingsSetACLLocation.Text = "Browse"
         Me.cmdSettingsSetACLLocation.TextAlign = System.Drawing.ContentAlignment.TopCenter
         Me.cmdSettingsSetACLLocation.UseVisualStyleBackColor = True
-        '
-        'chkBackupSDDLDisplaySIDno
-        '
-        Me.chkBackupSDDLDisplaySIDno.AutoSize = True
-        Me.chkBackupSDDLDisplaySIDno.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.chkBackupSDDLDisplaySIDno.Location = New System.Drawing.Point(326, 149)
-        Me.chkBackupSDDLDisplaySIDno.Name = "chkBackupSDDLDisplaySIDno"
-        Me.chkBackupSDDLDisplaySIDno.Size = New System.Drawing.Size(38, 17)
-        Me.chkBackupSDDLDisplaySIDno.TabIndex = 54
-        Me.chkBackupSDDLDisplaySIDno.Text = "No"
-        Me.chkBackupSDDLDisplaySIDno.UseVisualStyleBackColor = True
-        '
-        'chkBackupSDDLDisplaySIDboth
-        '
-        Me.chkBackupSDDLDisplaySIDboth.AutoSize = True
-        Me.chkBackupSDDLDisplaySIDboth.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.chkBackupSDDLDisplaySIDboth.Location = New System.Drawing.Point(326, 172)
-        Me.chkBackupSDDLDisplaySIDboth.Name = "chkBackupSDDLDisplaySIDboth"
-        Me.chkBackupSDDLDisplaySIDboth.Size = New System.Drawing.Size(49, 17)
-        Me.chkBackupSDDLDisplaySIDboth.TabIndex = 53
-        Me.chkBackupSDDLDisplaySIDboth.Text = "Both"
-        Me.chkBackupSDDLDisplaySIDboth.UseVisualStyleBackColor = True
-        '
-        'chkBackupSDDLDisplaySIDyes
-        '
-        Me.chkBackupSDDLDisplaySIDyes.AutoSize = True
-        Me.chkBackupSDDLDisplaySIDyes.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.chkBackupSDDLDisplaySIDyes.Location = New System.Drawing.Point(326, 126)
-        Me.chkBackupSDDLDisplaySIDyes.Name = "chkBackupSDDLDisplaySIDyes"
-        Me.chkBackupSDDLDisplaySIDyes.Size = New System.Drawing.Size(42, 17)
-        Me.chkBackupSDDLDisplaySIDyes.TabIndex = 52
-        Me.chkBackupSDDLDisplaySIDyes.Text = "Yes"
-        Me.chkBackupSDDLDisplaySIDyes.UseVisualStyleBackColor = True
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(314, 110)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(76, 13)
-        Me.Label3.TabIndex = 51
-        Me.Label3.Text = "DisplaySID:"
-        '
-        'chkBackupSDDLown
-        '
-        Me.chkBackupSDDLown.AutoSize = True
-        Me.chkBackupSDDLown.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.chkBackupSDDLown.Location = New System.Drawing.Point(121, 149)
-        Me.chkBackupSDDLown.Name = "chkBackupSDDLown"
-        Me.chkBackupSDDLown.Size = New System.Drawing.Size(70, 17)
-        Me.chkBackupSDDLown.TabIndex = 59
-        Me.chkBackupSDDLown.Text = "csv/own"
-        Me.chkBackupSDDLown.UseVisualStyleBackColor = True
-        '
-        'chkBackupSDDLtab
-        '
-        Me.chkBackupSDDLtab.AutoSize = True
-        Me.chkBackupSDDLtab.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.chkBackupSDDLtab.Location = New System.Drawing.Point(121, 172)
-        Me.chkBackupSDDLtab.Name = "chkBackupSDDLtab"
-        Me.chkBackupSDDLtab.Size = New System.Drawing.Size(41, 17)
-        Me.chkBackupSDDLtab.TabIndex = 58
-        Me.chkBackupSDDLtab.Text = "tab"
-        Me.chkBackupSDDLtab.UseVisualStyleBackColor = True
-        '
-        'chkBackupSDDLsddl
-        '
-        Me.chkBackupSDDLsddl.AutoSize = True
-        Me.chkBackupSDDLsddl.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.chkBackupSDDLsddl.Location = New System.Drawing.Point(121, 126)
-        Me.chkBackupSDDLsddl.Name = "chkBackupSDDLsddl"
-        Me.chkBackupSDDLsddl.Size = New System.Drawing.Size(46, 17)
-        Me.chkBackupSDDLsddl.TabIndex = 57
-        Me.chkBackupSDDLsddl.Text = "sddl"
-        Me.chkBackupSDDLsddl.UseVisualStyleBackColor = True
-        '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(109, 110)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(52, 13)
-        Me.Label4.TabIndex = 56
-        Me.Label4.Text = "Format:"
         '
         'frmMain
         '

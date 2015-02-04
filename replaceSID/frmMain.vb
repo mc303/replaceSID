@@ -18,7 +18,7 @@ Public Class frmMain
     
     Private Sub frmMain_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
         My.Settings.cont = Me.chkBackupSDDLcont.Checked
-
+        My.Settings.SetACLLocation = txtSettingsSetACLLocation.Text
         My.Settings.Save()
         debugOutput = Nothing
         debugOption = Nothing

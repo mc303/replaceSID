@@ -336,7 +336,7 @@ Module modMain
 
         End If
 
-        s_arguments = s_arguments + """" + s_recursion + " -bckp """ + frmMain.txtBackupSDDLbckp.Text + """ -silent"
+        s_arguments = (s_arguments + """" + s_recursion + " -bckp """ + frmMain.txtBackupSDDLbckp.Text + """ -silent").Replace("""", "")
 
         Return s_arguments
 
